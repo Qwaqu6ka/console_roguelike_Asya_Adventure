@@ -1,19 +1,6 @@
 namespace Roguelike {
-
-    class Coordinates : ICloneable {
-        public int x, y;
-
-        public Coordinates(int x, int y) {
-            this.x = x;
-            this.y = y;
-        }
-
-        public object Clone() {
-            return new Coordinates(this.x, this.y);
-        }
-    }
-
-    class Map {
+    
+    class Map : ICloneable {
 
         public char[,] map;
         public Coordinates startCoords;
@@ -24,53 +11,73 @@ namespace Roguelike {
             this.startCoords = startCoords;
             this.finishCoords = finishCoords;
         }
+
+        public object Clone() {
+            return new Map(
+                (char[,])this.map.Clone(), 
+                (Coordinates)this.startCoords.Clone(), 
+                (Coordinates)this.finishCoords.Clone()
+            );
+        }
     }
 
-    class MapService {
+    class MapService : IKeyController { // Todo: перенести логику сумки в другой класс
+        private MutableLiveData<bool> _isItemNear = new MutableLiveData<bool>(false);
+        public LiveData<bool> isItemNear {
+            get {
+                return _isItemNear;
+            }
+        }
+
+        private MutableLiveData<bool> _isEnemyNear = new MutableLiveData<bool>(false);
+        public LiveData<bool> isEnemyNear {
+            get {
+                return _isEnemyNear;
+            }
+        }
+
         private Coordinates playerCoords = new Coordinates(0, 0);
 
-        private char[] bag = new char[1];   // bag
-        private Coordinates bagCoords = new Coordinates(0, 0);  // bag
+        // private char[] bag = new char[1];   // bag
+        // private Coordinates bagCoords = new Coordinates(0, 0);  // bag
 
-        private int activeMapIndex = -1;
+        private Map activeMap;
 
         public MapService() {
             getNextRandomMap();
         }
 
-        public void drawMap() {
-
+        public void drawMap() { // TODO: перенести  в class View
             Console.SetCursorPosition(0, 0);
 
-            Map currentMap = maps[activeMapIndex];
-            int rows = currentMap.map.GetUpperBound(0) + 1;
-            int columns = currentMap.map.GetUpperBound(1) + 1;
+            int rows = activeMap.map.GetUpperBound(0) + 1;
+            int columns = activeMap.map.GetUpperBound(1) + 1;
 
             for (int y = 0; y < rows; y++) {
                 for (int x = 0; x < columns; x++) {
                     if (x == playerCoords.x && y == playerCoords.y)
                         Console.Write('@');
                     else
-                        Console.Write(currentMap.map[y, x]);
+                        Console.Write(activeMap.map[y, x]);
                 }
                 Console.WriteLine();
             }
         }
 
-        public void drawBag() {
-            Console.SetCursorPosition(bagCoords.x, bagCoords.y);
-            Console.Write("Сумка: ");
-            for (int i = 0; i < bag.Length; i++) {
-                Console.Write(bag[i] + " ");
-            }
+        // public void drawBag() {
+        //     Console.SetCursorPosition(bagCoords.x, bagCoords.y);
+        //     Console.Write("Сумка: ");
+        //     for (int i = 0; i < bag.Length; i++) {
+        //         Console.Write(bag[i] + " ");
+        //     }
 
-            Console.WriteLine();
-            Console.WriteLine(playerCoords.x);
-            Console.WriteLine(playerCoords.y);
-        }
+        //     Console.WriteLine();
+        //     Console.WriteLine(playerCoords.x);
+        //     Console.WriteLine(playerCoords.y);
+        // }
 
-        public void moveHero(ConsoleKeyInfo charKey) {
-            char[,] map = maps[activeMapIndex].map;
+        public void onKeyPressed(ConsoleKeyInfo charKey) {
+            char[,] map = activeMap.map;
             switch (charKey.Key) {
                 case ConsoleKey.UpArrow:
                     if (map[playerCoords.y - 1, playerCoords.x] != '#') {
@@ -96,50 +103,65 @@ namespace Roguelike {
                     }
                     break;
             }
-
-            checkCell();
+            changeState();
         }
 
-        private void checkCell() {
-            char cell = maps[activeMapIndex].map[playerCoords.y, playerCoords.x];
+        private void changeState() {    // ? дополнить
+            char cell = activeMap.map[playerCoords.y, playerCoords.x];
 
             switch (cell) {
-                case 'X':
-                    addItemToBag(); // bag
-                    break;
+                // case 'X':
+                //     addItemToBag(); // bag
+                //     break;
                 
                 case 'E':
                     getNextRandomMap();
                     break;
             }
+
+            _isItemNear.data = checkNearbyCells(playerCoords, '$');
+            _isEnemyNear.data = checkNearbyCells(playerCoords, 'Ü');
         }
 
-        private void addItemToBag() {   // bag
-            char[,] map = maps[activeMapIndex].map;
+        // Проверяет клетку и окрестности на наличие какой-либо сущности
+        private bool checkNearbyCells(Coordinates cell, char entity) {
+            int x = cell.x, y = cell.y;
+            char[,] map = activeMap.map;
 
-            map[playerCoords.y, playerCoords.x] = 'o';
-            char[] tempBag = new char[bag.Length + 1];
-            for (int i = 0; i < bag.Length; i++) {
-                tempBag[i] = bag[i];
-            }
-            tempBag[tempBag.Length - 1] = 'X';
-            bag = tempBag;
+            if (map[y, x] == entity ||
+                y > 0 && map[y - 1, x] == entity ||
+                y < map.GetUpperBound(0) && map[y + 1, x] == entity ||
+                x > 0 && map[y, x - 1] == entity ||
+                x < map.GetUpperBound(1) && map[y, x + 1] == entity ||
+                y > 0 && x < map.GetUpperBound(1) && map[y - 1, x + 1] == entity ||
+                y < map.GetUpperBound(0) && x < map.GetUpperBound(1) && map[y + 1, x + 1] == entity ||
+                y < map.GetUpperBound(0) && x > 0 && map[y + 1, x - 1] == entity ||
+                y > 0 && x > 0 && map[y - 1, x - 1] == entity)
+                return true;
+
+            return false;
         }
+
+        // private void addItemToBag() {   // bag
+        //     char[,] map = maps[activeMapIndex].map;
+
+        //     map[playerCoords.y, playerCoords.x] = 'o';
+        //     char[] tempBag = new char[bag.Length + 1];
+        //     for (int i = 0; i < bag.Length; i++) {
+        //         tempBag[i] = bag[i];
+        //     }
+        //     tempBag[tempBag.Length - 1] = 'X';
+        //     bag = tempBag;
+        // }
 
         private void getNextRandomMap() {
-            int nextMapIndex;
-            do {
-                nextMapIndex = new System.Random().Next(maps.Length);
-            } while (nextMapIndex == activeMapIndex);
-
-            activeMapIndex = nextMapIndex;
-
-            playerCoords = (Coordinates)maps[activeMapIndex].startCoords.Clone();
-
-            bagCoords.y = maps[activeMapIndex].map.GetUpperBound(0) + 3;    // bag
+            int nextMapIndex = new System.Random().Next(maps.Length);
+            activeMap = (Map)maps[nextMapIndex].Clone();
+            playerCoords = activeMap.startCoords;
+            // bagCoords.y = maps[activeMapIndex].map.GetUpperBound(0) + 3;    // bag
         }
 
-        private Map[] maps = {
+        private Map[] maps = {     // Todo: сделать считывание из json
             new Map(new char[,] {
                 { '#','#','#','#','#','#','E','#','#','#','#','#','#','#','#','#','#'},
                 { '#',' ','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
@@ -176,8 +198,6 @@ namespace Roguelike {
                 { '#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#'}
                 }, new Coordinates(15, 1), new Coordinates(1, 0)
             ),
-            // Чтобы добавить новые карты, нужно скопировать верхнюю конструкцию и вставить вместо этого комментария
-            //  Две цифры в конце - стартовые координаты конкретно на этой карте
         };
     }
 }

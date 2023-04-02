@@ -1,18 +1,31 @@
 ﻿namespace Roguelike {
-    class Program {
+    static class App {
+
+        // static bool isKeyboardAvailable = true;
+        public static Screen activeScreen = Screen.Menu;
+        public static MapService mapService = new MapService();
+
+
         static void Main(string[] args) {
             Console.CursorVisible = false;
-            MapService mapService = new MapService();
+
+            KeyController keyController = new KeyController(mapService);
 
             while(true) {
                 Console.Clear();
 
-                mapService.drawMap();
-                mapService.drawBag();
+                mapService.drawMap();   // TODO: убрать, сделать class View
 
-                ConsoleKeyInfo charKey = Console.ReadKey();
-                mapService.moveHero(charKey);
+                keyController.onKeyPressed(Console.ReadKey());
             }
         }
+    }
+
+    enum Screen {
+        Menu,
+        Map,
+        Combat,
+        Shop,
+        Inventory
     }
 }
