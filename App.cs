@@ -2,7 +2,12 @@
     static class App {
 
         // static bool isKeyboardAvailable = true;
-        public static Screen activeScreen = Screen.Menu;
+        private static MutableLiveData<Screen> _activeScreen = new MutableLiveData<Screen>(Screen.Menu);
+        public static LiveData<Screen> activeScreen {
+            get {
+                return _activeScreen;
+            }
+        }
         public static MapService mapService = new MapService();
 
 
