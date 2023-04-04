@@ -1,27 +1,7 @@
 namespace Roguelike {
-    
-    class Map : ICloneable {
 
-        public char[,] map;
-        public Coordinates startCoords;
-        public Coordinates finishCoords;
-
-        public Map(char[,] map, Coordinates startCoords, Coordinates finishCoords) {
-            this.map = map;
-            this.startCoords = startCoords;
-            this.finishCoords = finishCoords;
-        }
-
-        public object Clone() {
-            return new Map(
-                (char[,])this.map.Clone(), 
-                (Coordinates)this.startCoords.Clone(), 
-                (Coordinates)this.finishCoords.Clone()
-            );
-        }
-    }
-
-    class MapService : IKeyController { // Todo: перенести логику сумки в другой класс
+    // TODO: добаить считывание карт с файла
+    class MapScreen : IKeyController { // Todo: перенести логику сумки в другой класс
         private MutableLiveData<bool> _isItemNear = new MutableLiveData<bool>(false);
         public LiveData<bool> isItemNear {
             get {
@@ -50,7 +30,7 @@ namespace Roguelike {
             get { return _activeMap; }
         }
 
-        public MapService() {
+        public MapScreen() {
             getNextRandomMap();
         }
 

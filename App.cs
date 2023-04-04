@@ -8,16 +8,16 @@
                 return _activeScreen;
             }
         }
-        public static MapService mapService;
+        public static MapScreen mapScreen;
 
         static void Main() {
             Console.CursorVisible = false;
 
-            mapService = new MapService();
+            mapScreen = new MapScreen();
 
             ViewRouter viewRouter = new ViewRouter();
 
-            KeyController keyController = new KeyController(mapService);
+            KeyController keyController = new KeyController(mapScreen);
 
             while(true) {
                 Console.Clear();
