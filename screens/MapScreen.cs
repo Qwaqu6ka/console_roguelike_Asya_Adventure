@@ -16,7 +16,7 @@ namespace Roguelike {
             }
         }
 
-        private Coordinates _playerCoords;
+        private Coordinates _playerCoords = null!;
         public Coordinates playerCoords {
             get { return _playerCoords; }
         }
@@ -25,7 +25,7 @@ namespace Roguelike {
         // private char[] bag = new char[1];   // bag
         // private Coordinates bagCoords = new Coordinates(0, 0);  // bag
 
-        private Map _activeMap;
+        private Map _activeMap = null!;
         public Map activeMap {
             get { return _activeMap; }
         }

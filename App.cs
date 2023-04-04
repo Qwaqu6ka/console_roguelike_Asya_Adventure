@@ -8,7 +8,7 @@
                 return _activeScreen;
             }
         }
-        public static MapScreen mapScreen;
+        public static MapScreen mapScreen = null!;
 
         static void Main() {
             Console.CursorVisible = false;

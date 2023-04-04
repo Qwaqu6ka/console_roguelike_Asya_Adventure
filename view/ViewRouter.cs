@@ -2,7 +2,7 @@ namespace Roguelike {
 
     class ViewRouter {
 
-        private View viewToShow;
+        private View viewToShow = null!;
 
         public ViewRouter() {
             App.activeScreen.observe((screen) => {
