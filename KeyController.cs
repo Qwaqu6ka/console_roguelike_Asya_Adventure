@@ -7,7 +7,7 @@ namespace Roguelike {
         }
 
         public void onKeyPressed(ConsoleKeyInfo charKey) {
-            IKeyController controller = App.activeScreen switch {
+            IKeyController controller = App.activeScreen.data switch {
                 Screen.Map       => mapService,
                 Screen.Combat    => mapService,
                 Screen.Shop      => mapService,
@@ -20,6 +20,6 @@ namespace Roguelike {
     }
 
     interface IKeyController {
-        public void onKeyPressed(ConsoleKeyInfo charKey);
+        public void onKeyPressed(ConsoleKeyInfo charKey); //? private
     }
 }
