@@ -7,8 +7,11 @@ namespace Roguelike {
         public ViewRouter() {
             App.activeScreen.observe((screen) => {
                 viewToShow = screen switch {
-                    Screen.Menu => new MapView(App.mapService),
-                    Screen.Map => new MapView(App.mapService),
+                    Screen.Menu      => new MapView(App.mapScreen),
+                    Screen.Map       => new MapView(App.mapScreen),
+                    Screen.Combat    => new MapView(App.mapScreen),
+                    Screen.Shop      => new MapView(App.mapScreen),
+                    Screen.Inventory => new MapView(App.mapScreen),
                     _ => throw new ArgumentOutOfRangeException("Not expected screen: {App.activeScreen}")
                 };
             });

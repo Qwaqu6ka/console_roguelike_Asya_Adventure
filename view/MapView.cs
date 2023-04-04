@@ -2,17 +2,17 @@ namespace Roguelike {
 
     class MapView : View {
 
-        private MapService mapService;
+        private MapScreen mapScreen;
 
-        public MapView(MapService mapService) {
-            this.mapService = mapService;
+        public MapView(MapScreen mapScreen) {
+            this.mapScreen = mapScreen;
         }
         override public void draw() {
             Console.SetCursorPosition(0, 0);
 
-            Map activeMap = mapService.activeMap;
-            Coordinates playerCoords = mapService.playerCoords;
-            
+            Map activeMap = mapScreen.activeMap;
+            Coordinates playerCoords = mapScreen.playerCoords;
+
             int rows = activeMap.map.GetUpperBound(0) + 1;
             int columns = activeMap.map.GetUpperBound(1) + 1;
 
