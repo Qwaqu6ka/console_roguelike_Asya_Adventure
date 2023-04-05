@@ -8,18 +8,21 @@
                 return _activeScreen;
             }
         }
-        public static MapService mapService = new MapService();
+        public static MapScreen mapScreen = null!;
 
-
-        static void Main(string[] args) {
+        static void Main() {
             Console.CursorVisible = false;
 
-            KeyController keyController = new KeyController(mapService);
+            mapScreen = new MapScreen();
+
+            ViewRouter viewRouter = new ViewRouter();
+
+            KeyController keyController = new KeyController(mapScreen);
 
             while(true) {
                 Console.Clear();
 
-                mapService.drawMap();   // TODO: убрать, сделать class View
+                viewRouter.draw();
 
                 keyController.onKeyPressed(Console.ReadKey());
             }

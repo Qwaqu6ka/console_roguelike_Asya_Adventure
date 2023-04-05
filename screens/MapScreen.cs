@@ -1,27 +1,7 @@
 namespace Roguelike {
-    
-    class Map : ICloneable {
 
-        public char[,] map;
-        public Coordinates startCoords;
-        public Coordinates finishCoords;
-
-        public Map(char[,] map, Coordinates startCoords, Coordinates finishCoords) {
-            this.map = map;
-            this.startCoords = startCoords;
-            this.finishCoords = finishCoords;
-        }
-
-        public object Clone() {
-            return new Map(
-                (char[,])this.map.Clone(), 
-                (Coordinates)this.startCoords.Clone(), 
-                (Coordinates)this.finishCoords.Clone()
-            );
-        }
-    }
-
-    class MapService : IKeyController { // Todo: перенести логику сумки в другой класс
+    // TODO: добаить считывание карт с файла
+    class MapScreen : IKeyController { // Todo: перенести логику сумки в другой класс
         private MutableLiveData<bool> _isItemNear = new MutableLiveData<bool>(false);
         public LiveData<bool> isItemNear {
             get {
@@ -36,32 +16,22 @@ namespace Roguelike {
             }
         }
 
-        private Coordinates playerCoords = new Coordinates(0, 0);
+        private Coordinates _playerCoords = null!;
+        public Coordinates playerCoords {
+            get { return _playerCoords; }
+        }
+
 
         // private char[] bag = new char[1];   // bag
         // private Coordinates bagCoords = new Coordinates(0, 0);  // bag
 
-        private Map activeMap;
-
-        public MapService() {
-            getNextRandomMap();
+        private Map _activeMap = null!;
+        public Map activeMap {
+            get { return _activeMap; }
         }
 
-        public void drawMap() { // TODO: перенести  в class View
-            Console.SetCursorPosition(0, 0);
-
-            int rows = activeMap.map.GetUpperBound(0) + 1;
-            int columns = activeMap.map.GetUpperBound(1) + 1;
-
-            for (int y = 0; y < rows; y++) {
-                for (int x = 0; x < columns; x++) {
-                    if (x == playerCoords.x && y == playerCoords.y)
-                        Console.Write('@');
-                    else
-                        Console.Write(activeMap.map[y, x]);
-                }
-                Console.WriteLine();
-            }
+        public MapScreen() {
+            getNextRandomMap();
         }
 
         // public void drawBag() {
@@ -81,32 +51,32 @@ namespace Roguelike {
             switch (charKey.Key) {
                 case ConsoleKey.UpArrow:
                     if (map[playerCoords.y - 1, playerCoords.x] != '#') {
-                        playerCoords.y--;
+                        _playerCoords.y--;
                     }
                     break;
 
                 case ConsoleKey.DownArrow:
                     if (map[playerCoords.y + 1, playerCoords.x] != '#') {
-                        playerCoords.y++;
+                        _playerCoords.y++;
                     }
                     break;
 
                 case ConsoleKey.LeftArrow:
                     if (map[playerCoords.y, playerCoords.x - 1] != '#') {
-                        playerCoords.x--;
+                        _playerCoords.x--;
                     }
                     break;
 
                 case ConsoleKey.RightArrow:
                     if (map[playerCoords.y, playerCoords.x + 1] != '#') {
-                        playerCoords.x++;
+                        _playerCoords.x++;
                     }
                     break;
             }
             changeState();
         }
 
-        private void changeState() {    // ? дополнить
+        private void changeState() {
             char cell = activeMap.map[playerCoords.y, playerCoords.x];
 
             switch (cell) {
@@ -156,8 +126,8 @@ namespace Roguelike {
 
         private void getNextRandomMap() {
             int nextMapIndex = new System.Random().Next(maps.Length);
-            activeMap = (Map)maps[nextMapIndex].Clone();
-            playerCoords = activeMap.startCoords;
+            _activeMap = (Map)maps[nextMapIndex].Clone();
+            _playerCoords = activeMap.startCoords;
             // bagCoords.y = maps[activeMapIndex].map.GetUpperBound(0) + 3;    // bag
         }
 
