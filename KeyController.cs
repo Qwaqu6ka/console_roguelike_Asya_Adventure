@@ -1,18 +1,13 @@
 namespace Roguelike {
     class KeyController {
-        private MapScreen mapScreen;
-
-        public KeyController(MapScreen mapScreen) {
-            this.mapScreen = mapScreen;
-        }
 
         public void onKeyPressed(ConsoleKeyInfo charKey) {
             IKeyController controller = App.activeScreen.data switch {
-                Screen.Map       => mapScreen,
-                Screen.Combat    => mapScreen,
-                Screen.Shop      => mapScreen,
-                Screen.Inventory => mapScreen,
-                Screen.Menu      => mapScreen,
+                Screen.Map       => App.mapScreen,
+                Screen.Combat    => App.mapScreen,
+                Screen.Shop      => App.mapScreen,
+                Screen.Inventory => App.mapScreen,
+                Screen.Start     => App.startScreen,
                 _ => throw new ArgumentOutOfRangeException("Not expected screen: {App.activeScreen}")
             };
             controller.onKeyPressed(charKey);
@@ -20,6 +15,6 @@ namespace Roguelike {
     }
 
     interface IKeyController {
-        public void onKeyPressed(ConsoleKeyInfo charKey); //? private
+        public void onKeyPressed(ConsoleKeyInfo charKey);
     }
 }

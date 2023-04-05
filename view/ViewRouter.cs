@@ -7,7 +7,7 @@ namespace Roguelike {
         public ViewRouter() {
             App.activeScreen.observe((screen) => {
                 viewToShow = screen switch {
-                    Screen.Menu      => new MapView(App.mapScreen),
+                    Screen.Start     => new StartView(App.startScreen),
                     Screen.Map       => new MapView(App.mapScreen),
                     Screen.Combat    => new MapView(App.mapScreen),
                     Screen.Shop      => new MapView(App.mapScreen),
