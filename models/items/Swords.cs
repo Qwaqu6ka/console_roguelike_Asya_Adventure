@@ -1,14 +1,12 @@
 namespace Roguelike {
 
-    public delegate void SwordEffect<T>(T value);
-
     abstract class Sword<T> : Item{
         public string effectDescription;
-        public SwordEffect<T> effect;
+        public int cost;
 
-        public Sword(string title, string effectDescription, SwordEffect<T> effect) : base(title) {
+        public Sword(string title, string effectDescription, int cost) : base(title) {
             this.effectDescription = effectDescription;
-            this.effect = effect;
+            this.cost = cost;
         }
     }
 
@@ -16,9 +14,7 @@ namespace Roguelike {
         public WoodenSword() : base(
             title: "Деревянный меч",
             effectDescription: "Увеличивает атаку на 2 единицы",
-            effect: (hero) => {
-                hero.attack = hero.attack + 2; 
-            }
+            cost: 3
         ) {}
     }
 
@@ -26,9 +22,7 @@ namespace Roguelike {
         public IronSword() : base(
             title: "Железный меч",
             effectDescription: "Увеличивает атаку на 4 единицы",
-            effect: (hero) => {
-                hero.attack = hero.attack + 4; 
-            }
+            cost: 5
         ) {}
     }
 
@@ -36,9 +30,7 @@ namespace Roguelike {
         public MagicSword() : base(
             title: "Волшебный меч",
             effectDescription: "Увеличивает атаку на 7 единиц",
-            effect: (hero) => {
-                hero.attack = hero.attack + 7; 
-            }
+            cost: 7
         ) {}
     }
 }

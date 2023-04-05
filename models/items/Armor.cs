@@ -1,14 +1,14 @@
 namespace Roguelike {
 
-    public delegate void ArmorEffect<T>(T value);
-
     abstract class Armor<T> : Item{
         public string effectDescription;
-        public ArmorEffect<T> effect;
+        public int defencePoint;
+        public int cost;
 
-        public Armor(string title, string effectDescription, ArmorEffect<T> effect) : base(title) {
+        public Armor(string title, string effectDescription, int defencePoint, int cost) : base(title) {
             this.effectDescription = effectDescription;
-            this.effect = effect;
+            this.defencePoint = defencePoint;
+            this.cost = cost;
         }
     }
 
@@ -16,9 +16,8 @@ namespace Roguelike {
         public Shield() : base(
             title: "Щит",
             effectDescription: "Увеличивает защиту на 1 единицу",
-            effect: (hero) => {
-                hero.defence = hero.defence + 1; 
-            }
+            defencePoint: 1,
+            cost: 4
         ) {}
     }
 
@@ -26,9 +25,8 @@ namespace Roguelike {
         public BreastPlate() : base(
             title: "Нагрудник",
             effectDescription: "Увеличивает защиту на 3 единицы",
-            effect: (hero) => {
-                hero.defence = hero.defence + 3; 
-            }
+            defencePoint: 3,
+            cost: 7
         ) {}
     }
 
@@ -36,9 +34,8 @@ namespace Roguelike {
         public Armour() : base(
             title: "Доспехи",
             effectDescription: "Увеличивает защиту на 5 единиц",
-            effect: (hero) => {
-                hero.defence = hero.defence + 5; 
-            }
+            defencePoint: 5,
+            cost: 10
         ) {}
     }
 }
