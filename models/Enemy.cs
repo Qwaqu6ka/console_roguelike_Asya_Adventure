@@ -4,6 +4,7 @@ namespace Roguelike {
         public readonly int armor;
         public readonly int maxAttack;
         public readonly int minAttack;
+        public bool isBlind = false;
 
         public Enemy(int hp, int armor, int maxAttack, int minAttack) {
             this.hp = hp;
