@@ -1,27 +1,16 @@
 namespace Roguelike {
     class Hero {
-        public int hp;
-        public int maxHP;
-        public int minAttack;
-        public int maxAttack;
-        public int defence;
-        public int numOfCoins;
-        public int armor;
-        public int sword;
+        public int hp = 5;
+        public int maxHP = 5;
+        public int minAttack = 5;
+        public int maxAttack = 15;
+        public int defence = 5;
+        public int numOfCoins = 0;
+        public Armor? armor;
+        public Sword? sword;
 
-        public Hero(int hp, int maxHP, int minAttack, int maxAttack, int defence, int numOfCoins, int armor, int sword) {
-            this.hp = hp;
-            this.maxHP = maxHP;
-            this.minAttack = minAttack;
-            this.maxAttack = maxAttack;
-            this.defence = defence;
-            this.numOfCoins = numOfCoins;
-            this.armor = armor;
-            this.sword =sword;
-        }
-
-        public void equipArmor(Item Armor) {
-
+        public void equipArmor(Armor armor) {
+            
         }
 
         public void equipSword(Item Sword) {

@@ -1,4 +1,6 @@
-// TODO
+// TODO:
+// Map[],
+// hero: maxHP, defDefence, defMinAttack, defMaxAttack
 {
     "maps": [
         {

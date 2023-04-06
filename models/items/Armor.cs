@@ -1,18 +1,19 @@
 namespace Roguelike {
 
-    abstract class Armor<T> : Item{
+    abstract class Armor : SellableItem {
         public string effectDescription;
         public int defencePoint;
-        public int cost;
 
-        public Armor(string title, string effectDescription, int defencePoint, int cost) : base(title) {
+        public Armor(string title, string effectDescription, int defencePoint, int cost) : base(
+            title: title, 
+            cost: cost
+        ) {
             this.effectDescription = effectDescription;
             this.defencePoint = defencePoint;
-            this.cost = cost;
         }
     }
 
-    class Shield<T> : Armor<Hero> {
+    class Shield : Armor {
         public Shield() : base(
             title: "Щит",
             effectDescription: "Увеличивает защиту на 1 единицу",
@@ -21,7 +22,7 @@ namespace Roguelike {
         ) {}
     }
 
-        class BreastPlate<T> : Armor<Hero> {
+        class BreastPlate : Armor {
         public BreastPlate() : base(
             title: "Нагрудник",
             effectDescription: "Увеличивает защиту на 3 единицы",
@@ -30,7 +31,7 @@ namespace Roguelike {
         ) {}
     }
 
-        class Armour<T> : Armor<Hero> {
+        class Armour : Armor {
         public Armour() : base(
             title: "Доспехи",
             effectDescription: "Увеличивает защиту на 5 единиц",

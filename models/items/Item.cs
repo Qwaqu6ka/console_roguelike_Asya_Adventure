@@ -7,4 +7,12 @@ namespace Roguelike {
             this.title = title;
         }
     }
+
+    abstract class SellableItem : Item {
+        public int cost;
+
+        public SellableItem(string title, int cost) : base(title) {
+            this.cost = cost;
+        }
+    }
 }
