@@ -8,6 +8,22 @@ namespace Roguelike {
             this.y = y;
         }
 
+        public int distTo(Coordinates coords) {
+            return Convert.ToInt32(
+                Math.Sqrt(Math.Abs(coords.x - this.x) + Math.Abs(coords.y - this.y))
+            );
+        }
+
+        public static Coordinates randomGenerate(
+            int upBorder, 
+            int rightBorder, 
+            int downBorder = 0,
+            int leftBorder = 0) {
+                int x = leftBorder + new System.Random().Next(rightBorder - leftBorder);
+                int y = downBorder + new System.Random().Next(upBorder - downBorder);
+                return new Coordinates(x, y);
+        }
+
         public object Clone() {
             return new Coordinates(this.x, this.y);
         }

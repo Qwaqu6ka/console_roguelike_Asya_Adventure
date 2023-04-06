@@ -1,11 +1,15 @@
 namespace Roguelike {
 
     class MapView : View {
+        public int Length { get; }
+        public int Height { get; }
 
         private MapScreen mapScreen;
 
         public MapView(MapScreen mapScreen) {
             this.mapScreen = mapScreen;
+            Length = mapScreen.activeMap.map[0].Length;
+            Height = mapScreen.activeMap.map.Count;
         }
         override public void draw() {
             Console.SetCursorPosition(0, 0);

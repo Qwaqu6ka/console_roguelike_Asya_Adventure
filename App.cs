@@ -22,7 +22,6 @@
         static void Main() {
             readSettings();
             initScreens();
-            inventoryScreen = new InventoryScreen();
 
             ViewRouter viewRouter = new ViewRouter();
             KeyController keyController = new KeyController();
@@ -57,6 +56,7 @@
         private static void initScreens() {
             mapScreen = new MapScreen();
             startScreen = new StartScreen();
+            inventoryScreen = new InventoryScreen();
         }
     }
 

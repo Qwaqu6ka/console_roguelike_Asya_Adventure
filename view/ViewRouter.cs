@@ -23,16 +23,6 @@ namespace Roguelike {
     }
 
     abstract class View {
-        protected int _length;
-        public int Length {
-            get { return _length; }
-        }
-
-        protected int _height;
-        public int Height {
-            get { return _height; }
-        }
-
         abstract public void draw();
     }
 }

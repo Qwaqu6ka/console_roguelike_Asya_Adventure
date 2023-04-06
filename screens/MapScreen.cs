@@ -1,6 +1,6 @@
 namespace Roguelike {
 
-    class MapScreen : IKeyController { // Todo: перенести логику сумки в другой класс
+    class MapScreen : IKeyController {
         private MutableLiveData<bool> _isItemNear = new MutableLiveData<bool>(false);
         public LiveData<bool> isItemNear {
             get {
@@ -21,10 +21,7 @@ namespace Roguelike {
         }
 
         private List<Map> maps;
-
-
-        // private char[] bag = new char[1];   // bag
-        // private Coordinates bagCoords = new Coordinates(0, 0);  // bag
+        private HashSet<Enemy> enemies = null!;
 
         private Map _activeMap = null!;
         public Map activeMap {
@@ -35,18 +32,6 @@ namespace Roguelike {
             maps = App.properties.maps;
             getNextRandomMap();
         }
-
-        // public void drawBag() {
-        //     Console.SetCursorPosition(bagCoords.x, bagCoords.y);
-        //     Console.Write("Сумка: ");
-        //     for (int i = 0; i < bag.Length; i++) {
-        //         Console.Write(bag[i] + " ");
-        //     }
-
-        //     Console.WriteLine();
-        //     Console.WriteLine(playerCoords.x);
-        //     Console.WriteLine(playerCoords.y);
-        // }
 
         public void onKeyPressed(ConsoleKeyInfo charKey) {
             List<string> map = activeMap.map;
@@ -120,23 +105,42 @@ namespace Roguelike {
             return false;
         }
 
-        // private void addItemToBag() {   // bag
-        //     char[,] map = maps[activeMapIndex].map;
-
-        //     map[playerCoords.y, playerCoords.x] = 'o';
-        //     char[] tempBag = new char[bag.Length + 1];
-        //     for (int i = 0; i < bag.Length; i++) {
-        //         tempBag[i] = bag[i];
-        //     }
-        //     tempBag[tempBag.Length - 1] = 'X';
-        //     bag = tempBag;
-        // }
-
         private void getNextRandomMap() {
             int nextMapIndex = new System.Random().Next(maps.Count);
             _activeMap = (Map)maps[nextMapIndex].Clone();
             _playerCoords = activeMap.startCoords;
-            // bagCoords.y = maps[activeMapIndex].map.GetUpperBound(0) + 3;    // bag
+            
+            getEnemies();
+        }
+
+        private void getEnemies() {
+            enemies = new HashSet<Enemy>();
+            // int nextEnemyCount = new System.Random()
+            //     .Next(App.properties.enemyGenerationParams.maxEnemies + 1);
+            int nextEnemyCount = 1;
+            EnemyGlossary enemyGlossary = new EnemyGlossary();
+            for (int i = 0; i < nextEnemyCount; ++i) {
+                enemies.Add(enemyGlossary.getRandomEnemy());
+            }
+            
+            foreach (Enemy enemy in enemies) {
+                bool isCoordUnique = true;
+                do {
+                    Coordinates coords = 
+                        Coordinates.randomGenerate(activeMap.map.Count, activeMap.map[0].Length);
+                    
+                    while (activeMap.map[coords.y][coords.x])
+
+                    int minDist = App.properties.enemyGenerationParams.distanceBetweenEnemies;
+                    foreach (Enemy enemy1 in enemies) {
+                        if (enemy != enemy1 && enemy.coords.distTo(enemy1.coords) <= minDist) {
+                            isCoordUnique = false;
+                            break;
+                        }
+                    }
+
+                } while (!isCoordUnique);
+            }
         }
     }
 }

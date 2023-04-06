@@ -5,6 +5,26 @@
         "defaultMinAttack": 1,
         "defaultMaxAttack": 3
     },
+    "enemyDefaultStats": {
+        "Forgetful": {
+            "name": "Забывака",
+            "hp": 5,
+            "armor": 5,
+            "maxAttack": 10,
+            "minAttack": 4
+        },
+        "Tracker": {
+            "name": "Следопыт",
+            "hp": 5,
+            "armor": 5,
+            "maxAttack": 10,
+            "minAttack": 4
+        }
+    },
+    "enemyGenerationParams": {
+        "maxEnemies": 3,
+        "distanceBetweenEnemies": 5
+    },
     "icons": {
         "hero": "@",
         "item": "X",
@@ -14,16 +34,16 @@
     "maps": [
         {
             "map": [
-                "########################",
-                "#                      #",
-                "#                      #",
-                "#                      #",
-                "#                      #",
-                "########################"
+                "########################################",
+                "#                                      #",
+                "#                                      #",
+                "#                                      #",
+                "#                                      #",
+                "########################################"
             ],
             "startCoords": {
-                "x": 3,
-                "y": 3
+                "x": 2,
+                "y": 2
             },
             "finishCoords": {
                 "x": 3,
