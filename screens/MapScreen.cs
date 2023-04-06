@@ -1,6 +1,5 @@
 namespace Roguelike {
 
-    // TODO: добаить считывание карт с файла
     class MapScreen : IKeyController { // Todo: перенести логику сумки в другой класс
         private MutableLiveData<bool> _isItemNear = new MutableLiveData<bool>(false);
         public LiveData<bool> isItemNear {
@@ -21,6 +20,8 @@ namespace Roguelike {
             get { return _playerCoords; }
         }
 
+        private List<Map> maps;
+
 
         // private char[] bag = new char[1];   // bag
         // private Coordinates bagCoords = new Coordinates(0, 0);  // bag
@@ -31,6 +32,7 @@ namespace Roguelike {
         }
 
         public MapScreen() {
+            maps = App.properties.maps;
             getNextRandomMap();
         }
 
@@ -47,28 +49,28 @@ namespace Roguelike {
         // }
 
         public void onKeyPressed(ConsoleKeyInfo charKey) {
-            char[,] map = activeMap.map;
+            List<string> map = activeMap.map;
             switch (charKey.Key) {
                 case ConsoleKey.UpArrow:
-                    if (map[playerCoords.y - 1, playerCoords.x] != '#') {
+                    if (map[playerCoords.y - 1][playerCoords.x] != '#') {
                         _playerCoords.y--;
                     }
                     break;
 
                 case ConsoleKey.DownArrow:
-                    if (map[playerCoords.y + 1, playerCoords.x] != '#') {
+                    if (map[playerCoords.y + 1][playerCoords.x] != '#') {
                         _playerCoords.y++;
                     }
                     break;
 
                 case ConsoleKey.LeftArrow:
-                    if (map[playerCoords.y, playerCoords.x - 1] != '#') {
+                    if (map[playerCoords.y][playerCoords.x - 1] != '#') {
                         _playerCoords.x--;
                     }
                     break;
 
                 case ConsoleKey.RightArrow:
-                    if (map[playerCoords.y, playerCoords.x + 1] != '#') {
+                    if (map[playerCoords.y][playerCoords.x + 1] != '#') {
                         _playerCoords.x++;
                     }
                     break;
@@ -77,7 +79,7 @@ namespace Roguelike {
         }
 
         private void changeState() {
-            char cell = activeMap.map[playerCoords.y, playerCoords.x];
+            char cell = activeMap.map[playerCoords.y][playerCoords.x];
 
             switch (cell) {
                 // case 'X':
@@ -96,17 +98,17 @@ namespace Roguelike {
         // Проверяет клетку и окрестности на наличие какой-либо сущности
         private bool checkNearbyCells(Coordinates cell, char entity) {
             int x = cell.x, y = cell.y;
-            char[,] map = activeMap.map;
+            List<string> map = activeMap.map;
 
-            if (map[y, x] == entity ||
-                y > 0 && map[y - 1, x] == entity ||
-                y < map.GetUpperBound(0) && map[y + 1, x] == entity ||
-                x > 0 && map[y, x - 1] == entity ||
-                x < map.GetUpperBound(1) && map[y, x + 1] == entity ||
-                y > 0 && x < map.GetUpperBound(1) && map[y - 1, x + 1] == entity ||
-                y < map.GetUpperBound(0) && x < map.GetUpperBound(1) && map[y + 1, x + 1] == entity ||
-                y < map.GetUpperBound(0) && x > 0 && map[y + 1, x - 1] == entity ||
-                y > 0 && x > 0 && map[y - 1, x - 1] == entity)
+            if (map[y][x] == entity ||
+                y > 0 && map[y - 1][x] == entity ||
+                y < map.Count - 1 && map[y + 1][x] == entity ||
+                x > 0 && map[y][x - 1] == entity ||
+                x < map[0].Length - 1 && map[y][x + 1] == entity ||
+                y > 0 && x < map[0].Length - 1 && map[y - 1][x + 1] == entity ||
+                y < map.Count - 1 && x < map[0].Length - 1 && map[y + 1][x + 1] == entity ||
+                y < map.Count - 1 && x > 0 && map[y + 1][x - 1] == entity ||
+                y > 0 && x > 0 && map[y - 1][x - 1] == entity)
                 return true;
 
             return false;
@@ -125,49 +127,10 @@ namespace Roguelike {
         // }
 
         private void getNextRandomMap() {
-            int nextMapIndex = new System.Random().Next(maps.Length);
+            int nextMapIndex = new System.Random().Next(maps.Count);
             _activeMap = (Map)maps[nextMapIndex].Clone();
             _playerCoords = activeMap.startCoords;
             // bagCoords.y = maps[activeMapIndex].map.GetUpperBound(0) + 3;    // bag
         }
-
-        private Map[] maps = {     // Todo: сделать считывание из json
-            new Map(new char[,] {
-                { '#','#','#','#','#','#','E','#','#','#','#','#','#','#','#','#','#'},
-                { '#',' ','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
-                { '#',' ','#',' ','X',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','X','#'},
-                { '#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
-                { '#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
-                { '#',' ',' ',' ',' ',' ',' ',' ','#','#','#',' ',' ',' ',' ',' ','#'},
-                { '#',' ','#',' ',' ',' ',' ',' ','#','X','#',' ',' ',' ',' ',' ','#'},
-                { '#',' ','#',' ',' ',' ',' ',' ','#',' ','#',' ',' ',' ',' ',' ','#'},
-                { '#',' ','#',' ',' ',' ',' ',' ','#',' ','#',' ',' ',' ',' ',' ','#'},
-                { '#',' ','#',' ',' ',' ',' ',' ','#',' ','#',' ',' ',' ',' ',' ','#'},
-                { '#',' ','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
-                { '#',' ','#','#','#','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
-                { '#',' ',' ','X',' ','#',' ',' ',' ',' ',' ',' ',' ','X',' ',' ','#'},
-                { '#',' ',' ',' ',' ','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
-                { '#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#'}
-                }, new Coordinates(13, 4), new Coordinates(6, 0)
-            ),
-            new Map(new char[,] {
-                { '#','E','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#'},
-                { '#',' ','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
-                { '#',' ','#',' ','X',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','X','#'},
-                { '#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
-                { '#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
-                { '#',' ',' ',' ',' ',' ',' ',' ','#','#','#',' ',' ',' ',' ',' ','#'},
-                { '#',' ',' ',' ',' ',' ',' ',' ',' ','X',' ',' ',' ',' ',' ',' ','#'},
-                { '#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
-                { '#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
-                { '#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
-                { '#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
-                { '#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
-                { '#',' ',' ','X',' ','#',' ',' ',' ',' ',' ',' ',' ','X',' ',' ','#'},
-                { '#',' ',' ',' ',' ','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
-                { '#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#'}
-                }, new Coordinates(15, 1), new Coordinates(1, 0)
-            ),
-        };
     }
 }

@@ -1,0 +1,34 @@
+{   
+    "heroDefaultStats": {
+        "defaultHP": 10,
+        "defaultDefence": 5,
+        "defaultMinAttack": 1,
+        "defaultMaxAttack": 3
+    },
+    "icons": {
+        "hero": "@",
+        "item": "X",
+        "Forgetful": "6",
+        "Tracker": "R"
+    },
+    "maps": [
+        {
+            "map": [
+                "########################",
+                "#                      #",
+                "#                      #",
+                "#                      #",
+                "#                      #",
+                "########################"
+            ],
+            "startCoords": {
+                "x": 3,
+                "y": 3
+            },
+            "finishCoords": {
+                "x": 3,
+                "y": 3
+            }
+        }
+    ]
+}

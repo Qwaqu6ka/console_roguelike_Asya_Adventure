@@ -2,11 +2,11 @@ namespace Roguelike {
 
     class Map : ICloneable {
 
-        public char[,] map;
-        public Coordinates startCoords;
-        public Coordinates finishCoords;
+        public List<string> map { get; set; }
+        public Coordinates startCoords { get; set; }
+        public Coordinates finishCoords { get; set; }
 
-        public Map(char[,] map, Coordinates startCoords, Coordinates finishCoords) {
+        public Map(List<string> map, Coordinates startCoords, Coordinates finishCoords) {
             this.map = map;
             this.startCoords = startCoords;
             this.finishCoords = finishCoords;
@@ -14,7 +14,7 @@ namespace Roguelike {
 
         public object Clone() {
             return new Map(
-                (char[,])this.map.Clone(), 
+                new List<string>(this.map), 
                 (Coordinates)this.startCoords.Clone(), 
                 (Coordinates)this.finishCoords.Clone()
             );

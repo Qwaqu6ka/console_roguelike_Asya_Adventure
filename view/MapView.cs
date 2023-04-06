@@ -13,15 +13,15 @@ namespace Roguelike {
             Map activeMap = mapScreen.activeMap;
             Coordinates playerCoords = mapScreen.playerCoords;
 
-            int rows = activeMap.map.GetUpperBound(0) + 1;
-            int columns = activeMap.map.GetUpperBound(1) + 1;
+            int rows = activeMap.map.Count;
+            int columns = activeMap.map[0].Length;
 
             for (int y = 0; y < rows; y++) {
                 for (int x = 0; x < columns; x++) {
                     if (x == playerCoords.x && y == playerCoords.y)
-                        Console.Write('@');
+                        Console.Write(App.properties.icons.hero);
                     else
-                        Console.Write(activeMap.map[y, x]);
+                        Console.Write(activeMap.map[y][x]);
                 }
                 Console.WriteLine();
             }
