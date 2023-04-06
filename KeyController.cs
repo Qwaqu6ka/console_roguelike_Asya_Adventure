@@ -6,7 +6,7 @@ namespace Roguelike {
                 Screen.Map       => App.mapScreen,
                 Screen.Combat    => App.mapScreen,
                 Screen.Shop      => App.mapScreen,
-                Screen.Inventory => App.mapScreen,
+                Screen.Inventory => App.inventoryScreen,
                 Screen.Start     => App.startScreen,
                 _ => throw new ArgumentOutOfRangeException("Not expected screen: {App.activeScreen}")
             };

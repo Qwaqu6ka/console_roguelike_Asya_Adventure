@@ -15,12 +15,14 @@
         public static Properties properties = null!;
         public static MapScreen mapScreen = null!;
         public static StartScreen startScreen = null!;
+        public static InventoryScreen inventoryScreen = null!;
 
         private const string SETTINGS_FILE = "properties.json";
 
         static void Main() {
             readSettings();
             initScreens();
+            inventoryScreen = new InventoryScreen();
 
             ViewRouter viewRouter = new ViewRouter();
             KeyController keyController = new KeyController();
@@ -38,6 +40,10 @@
 
         public static void openMapScreen() {
             _activeScreen.data = Screen.Map;
+        }
+
+        public static void openInventoryScreen() {
+            _activeScreen.data = Screen.Inventory;
         }
 
         private static void readSettings() {

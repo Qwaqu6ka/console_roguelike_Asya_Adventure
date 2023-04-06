@@ -10,11 +10,23 @@ namespace Roguelike {
         public Sword? sword;
 
         public void equipArmor(Armor armor) {
-            
+            if (this.armor != null) {
+                defence -= armor.defencePoint;
+                this.armor = armor;
+                defence += armor.defencePoint;
+            } else { 
+                defence += armor.defencePoint;
+                this.armor = armor;
+            }
         }
 
-        public void equipSword(Item Sword) {
+        public void equipSword(Sword sword) {
+            if (sword != null) {
+                this.sword = sword;
+                this.maxAttack += sword.attackPoints;
+                this.minAttack += sword.attackPoints;
 
+            }
         }
     }
 }

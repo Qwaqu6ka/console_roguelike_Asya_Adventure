@@ -74,6 +74,12 @@ namespace Roguelike {
                         _playerCoords.x++;
                     }
                     break;
+                
+                case ConsoleKey.I:
+                    App.openInventoryScreen();
+                    break;
+
+                
             }
             changeState();
         }

@@ -6,6 +6,8 @@ namespace Roguelike {
         public Item(string title) {
             this.title = title;
         }
+
+        // public abstract void useItem();
     }
 
     abstract class SellableItem : Item {

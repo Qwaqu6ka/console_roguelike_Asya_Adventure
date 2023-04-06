@@ -5,6 +5,9 @@ namespace Roguelike {
     abstract class Potion<T> : Item {
         public string effectDescription;
         public PotionEffect<T> effect;
+        // public override void useItem() {
+        //     effect.Invoke(any);
+        // }
 
         public Potion(string title, string effectDescription, PotionEffect<T> effect) : base(title) {
             this.effectDescription = effectDescription;
@@ -22,6 +25,10 @@ namespace Roguelike {
                 }
             }
         ) {}
+
+        // public void useItem() {
+        //     effect.Invoke
+        // }
     }
 
     class HealPotion : Potion<Hero> {
