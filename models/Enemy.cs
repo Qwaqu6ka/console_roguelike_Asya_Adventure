@@ -4,7 +4,7 @@ namespace Roguelike {
         public readonly int armor;
         public readonly int maxAttack;
         public readonly int minAttack;
-        public string name;
+        public readonly string name;
         public bool isBlind = false;
 
         public Enemy(int hp, int armor, int maxAttack, int minAttack, string name) {
@@ -46,5 +46,19 @@ namespace Roguelike {
             
         }
         
+    }
+
+        class MushroomBoss : Enemy {
+        public MushroomBoss() : base(
+            name: "Повелитель леса",
+            hp: 25, 
+            armor: 5, 
+            maxAttack: 6,
+            minAttack: 3 
+        ) {}
+
+        override public void mapMove() {
+            
+        }
     }
 }

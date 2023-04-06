@@ -22,10 +22,6 @@ namespace Roguelike {
 
         private List<Map> maps;
 
-
-        // private char[] bag = new char[1];   // bag
-        // private Coordinates bagCoords = new Coordinates(0, 0);  // bag
-
         private Map _activeMap = null!;
         public Map activeMap {
             get { return _activeMap; }
@@ -36,41 +32,38 @@ namespace Roguelike {
             getNextRandomMap();
         }
 
-        // public void drawBag() {
-        //     Console.SetCursorPosition(bagCoords.x, bagCoords.y);
-        //     Console.Write("Сумка: ");
-        //     for (int i = 0; i < bag.Length; i++) {
-        //         Console.Write(bag[i] + " ");
-        //     }
-
-        //     Console.WriteLine();
-        //     Console.WriteLine(playerCoords.x);
-        //     Console.WriteLine(playerCoords.y);
-        // }
+        private bool isCellAllowed(Coordinates cell) {
+            List<string> map = activeMap.map;
+            foreach (string symbol in App.properties.forbidenSymbols) {
+                if (map[cell.y][cell.x] == symbol[0]) {
+                    return false;
+                } 
+            }
+            return true;
+        }
 
         public void onKeyPressed(ConsoleKeyInfo charKey) {
-            List<string> map = activeMap.map;
             switch (charKey.Key) {
                 case ConsoleKey.UpArrow:
-                    if (map[playerCoords.y - 1][playerCoords.x] != '#') {
+                    if (isCellAllowed(new Coordinates(playerCoords.x, playerCoords.y - 1))) {
                         _playerCoords.y--;
                     }
                     break;
 
                 case ConsoleKey.DownArrow:
-                    if (map[playerCoords.y + 1][playerCoords.x] != '#') {
+                    if (isCellAllowed(new Coordinates(playerCoords.x, playerCoords.y + 1))) {
                         _playerCoords.y++;
                     }
                     break;
 
                 case ConsoleKey.LeftArrow:
-                    if (map[playerCoords.y][playerCoords.x - 1] != '#') {
+                    if (isCellAllowed(new Coordinates(playerCoords.x - 1, playerCoords.y))) {
                         _playerCoords.x--;
                     }
                     break;
 
                 case ConsoleKey.RightArrow:
-                    if (map[playerCoords.y][playerCoords.x + 1] != '#') {
+                    if (isCellAllowed(new Coordinates(playerCoords.x + 1, playerCoords.y))) {
                         _playerCoords.x++;
                     }
                     break;
@@ -78,8 +71,6 @@ namespace Roguelike {
                 case ConsoleKey.I:
                     App.openInventoryScreen();
                     break;
-
-                
             }
             changeState();
         }
@@ -88,11 +79,7 @@ namespace Roguelike {
             char cell = activeMap.map[playerCoords.y][playerCoords.x];
 
             switch (cell) {
-                // case 'X':
-                //     addItemToBag(); // bag
-                //     break;
-                
-                case 'E':
+                case '▒':
                     getNextRandomMap();
                     break;
             }
@@ -120,23 +107,11 @@ namespace Roguelike {
             return false;
         }
 
-        // private void addItemToBag() {   // bag
-        //     char[,] map = maps[activeMapIndex].map;
-
-        //     map[playerCoords.y, playerCoords.x] = 'o';
-        //     char[] tempBag = new char[bag.Length + 1];
-        //     for (int i = 0; i < bag.Length; i++) {
-        //         tempBag[i] = bag[i];
-        //     }
-        //     tempBag[tempBag.Length - 1] = 'X';
-        //     bag = tempBag;
-        // }
-
         private void getNextRandomMap() {
             int nextMapIndex = new System.Random().Next(maps.Count);
             _activeMap = (Map)maps[nextMapIndex].Clone();
             _playerCoords = activeMap.startCoords;
-            // bagCoords.y = maps[activeMapIndex].map.GetUpperBound(0) + 3;    // bag
+
         }
     }
 }

@@ -4,6 +4,7 @@ namespace Roguelike.Json {
         public HeroDefaultStats heroDefaultStats { get; set; } = null!;
         public Icons icons { get; set; } = null!;
         public List<Map> maps { get; set; } = null!;
+        public List<string> forbidenSymbols { get; set; } = null!;
     }
 
     class HeroDefaultStats {

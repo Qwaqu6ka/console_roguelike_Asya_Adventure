@@ -17,12 +17,11 @@
         public static StartScreen startScreen = null!;
         public static InventoryScreen inventoryScreen = null!;
 
-        private const string SETTINGS_FILE = "properties.json";
+        private const string SETTINGS_FILE = "123.json";
 
         static void Main() {
             readSettings();
             initScreens();
-            inventoryScreen = new InventoryScreen();
 
             ViewRouter viewRouter = new ViewRouter();
             KeyController keyController = new KeyController();
@@ -57,6 +56,7 @@
         private static void initScreens() {
             mapScreen = new MapScreen();
             startScreen = new StartScreen();
+            inventoryScreen = new InventoryScreen();
         }
     }
 
