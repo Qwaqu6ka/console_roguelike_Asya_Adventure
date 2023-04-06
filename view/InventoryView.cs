@@ -8,7 +8,7 @@ namespace Roguelike {
 
         public override void draw() {
             Console.WriteLine("Inventory");
-            Console.WriteLine(inventoryScreen.inventory.ToArray().Length);
+            
         }
     }
 }

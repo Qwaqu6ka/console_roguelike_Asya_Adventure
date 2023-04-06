@@ -4,7 +4,7 @@ namespace Roguelike {
         public readonly int armor;
         public readonly int maxAttack;
         public readonly int minAttack;
-        public string name;
+        public readonly string name;
         public bool isBlind = false;
         public Coordinates coords = new Coordinates(0, 0);
 
@@ -57,6 +57,24 @@ namespace Roguelike {
             
         }
         
+    }
+
+        class MushroomBoss : Enemy {
+        public MushroomBoss() : base(
+            name: "Повелитель леса",
+            hp: 25, 
+            armor: 5, 
+            maxAttack: 6,
+            minAttack: 3 
+        ) {}
+
+        public override object Clone() {
+            return new MushroomBoss();
+        }
+
+        override public void mapMove() {
+            
+        }
     }
 
     class EnemyGlossary {

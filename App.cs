@@ -17,7 +17,7 @@
         public static StartScreen startScreen = null!;
         public static InventoryScreen inventoryScreen = null!;
 
-        private const string SETTINGS_FILE = "properties.json";
+        private const string SETTINGS_FILE = "123.json";
 
         static void Main() {
             readSettings();

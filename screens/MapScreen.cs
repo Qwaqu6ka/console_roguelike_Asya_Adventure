@@ -33,29 +33,38 @@ namespace Roguelike {
             getNextRandomMap();
         }
 
-        public void onKeyPressed(ConsoleKeyInfo charKey) {
+        private bool isCellAllowed(Coordinates cell) {
             List<string> map = activeMap.map;
+            foreach (string symbol in App.properties.forbidenSymbols) {
+                if (map[cell.y][cell.x] == symbol[0]) {
+                    return false;
+                } 
+            }
+            return true;
+        }
+
+        public void onKeyPressed(ConsoleKeyInfo charKey) {
             switch (charKey.Key) {
                 case ConsoleKey.UpArrow:
-                    if (map[playerCoords.y - 1][playerCoords.x] != '#') {
+                    if (isCellAllowed(new Coordinates(playerCoords.x, playerCoords.y - 1))) {
                         _playerCoords.y--;
                     }
                     break;
 
                 case ConsoleKey.DownArrow:
-                    if (map[playerCoords.y + 1][playerCoords.x] != '#') {
+                    if (isCellAllowed(new Coordinates(playerCoords.x, playerCoords.y + 1))) {
                         _playerCoords.y++;
                     }
                     break;
 
                 case ConsoleKey.LeftArrow:
-                    if (map[playerCoords.y][playerCoords.x - 1] != '#') {
+                    if (isCellAllowed(new Coordinates(playerCoords.x - 1, playerCoords.y))) {
                         _playerCoords.x--;
                     }
                     break;
 
                 case ConsoleKey.RightArrow:
-                    if (map[playerCoords.y][playerCoords.x + 1] != '#') {
+                    if (isCellAllowed(new Coordinates(playerCoords.x + 1, playerCoords.y))) {
                         _playerCoords.x++;
                     }
                     break;
@@ -63,8 +72,6 @@ namespace Roguelike {
                 case ConsoleKey.I:
                     App.openInventoryScreen();
                     break;
-
-                
             }
             changeState();
         }
@@ -73,11 +80,7 @@ namespace Roguelike {
             char cell = activeMap.map[playerCoords.y][playerCoords.x];
 
             switch (cell) {
-                // case 'X':
-                //     addItemToBag(); // bag
-                //     break;
-                
-                case 'E':
+                case '▒':
                     getNextRandomMap();
                     break;
             }
@@ -126,14 +129,16 @@ namespace Roguelike {
             foreach (Enemy enemy in enemies) {
                 bool isCoordUnique = true;
                 do {
-                    Coordinates coords = 
+                    Coordinates coords = new Coordinates(0, 0);
+                    do {
                         Coordinates.randomGenerate(activeMap.map.Count, activeMap.map[0].Length);
-                    
-                    while (activeMap.map[coords.y][coords.x])
+                    } while (!isCellAllowed(coords));
 
                     int minDist = App.properties.enemyGenerationParams.distanceBetweenEnemies;
                     foreach (Enemy enemy1 in enemies) {
-                        if (enemy != enemy1 && enemy.coords.distTo(enemy1.coords) <= minDist) {
+                        if (enemy != enemy1 && 
+                            enemy1.coords.x != 0 && enemy1.coords.y != 0 && 
+                            enemy.coords.distTo(enemy1.coords) <= minDist) {
                             isCoordUnique = false;
                             break;
                         }
