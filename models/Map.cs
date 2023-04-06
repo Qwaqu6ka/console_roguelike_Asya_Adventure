@@ -12,6 +12,10 @@ namespace Roguelike {
             this.finishCoords = finishCoords;
         }
 
+        public char at(Coordinates coords) {
+            return map[coords.y][coords.x];
+        }
+
         public object Clone() {
             return new Map(
                 new List<string>(this.map), 
