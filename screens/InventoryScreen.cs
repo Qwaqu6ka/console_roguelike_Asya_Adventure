@@ -1,6 +1,7 @@
 namespace Roguelike {
-    class InventoryScreen : IKeyController{
+    class InventoryScreen : IKeyController {
 
+        public Screen openedFrom;
         public HashSet<Item> inventory = new HashSet<Item>();
 
         public void addItem(Item item) {

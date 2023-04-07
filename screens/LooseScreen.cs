@@ -1,0 +1,6 @@
+namespace Roguelike {
+    
+    class EndScreen {
+
+    }
+}

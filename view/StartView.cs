@@ -1,8 +1,8 @@
 namespace Roguelike {
     class StartView : View {
         StartScreen startScreen;
-        List<string> welcomeScreen = App.properties.startScreens.welcome;
-        List<string> storyScreen = App.properties.startScreens.story;
+        List<string> welcomeScreen = App.properties.screens.welcome;
+        List<string> storyScreen = App.properties.screens.story;
 
         public StartView(StartScreen startScreen) {
             this.startScreen = startScreen;
