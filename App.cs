@@ -24,8 +24,7 @@
 
         static void Main() {
             readSettings();
-            hero = new Hero();
-            initScreens();
+            restartGame();
             
             combatScreen.isPlayerLoose.observe((yes) => {
                 if (yes) openLooseScreen();
@@ -33,8 +32,8 @@
 
             ViewRouter viewRouter = new ViewRouter();
             KeyController keyController = new KeyController();
-            Console.ForegroundColor = ConsoleColor.Green;
 
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.CursorVisible = false;
             
 
@@ -69,6 +68,13 @@
         public static void openLooseScreen() {
             gameStatus = GameStatus.Lose;
             _activeScreen.data = Screen.End;
+        }
+
+        public static void restartGame() {
+            hero = new Hero();
+            gameStatus = GameStatus.InProcess;
+            initScreens();
+            _activeScreen.data = Screen.Start;
         }
 
         private static void readSettings() {
