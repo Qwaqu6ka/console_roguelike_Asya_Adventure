@@ -17,4 +17,8 @@ namespace Roguelike {
             this.cost = cost;
         }
     }
+
+    class SpawnItemsGlossary {  // TODO: glossary
+
+    }
 }

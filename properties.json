@@ -1,5 +1,6 @@
 {   
     "levelsToFinalBoss": 3,
+    "itemsSpawnMaxCount": 1,
     
     "heroDefaultStats": {
         "defaultHP": 10,
