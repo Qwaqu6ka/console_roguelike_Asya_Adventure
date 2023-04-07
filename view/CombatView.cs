@@ -74,16 +74,16 @@ namespace Roguelike {
             }
 
             Hero hero = App.hero;
-            Console.WriteLine("Hero:");
-            Console.Write("HP: {0}/{1}", hero.hp, hero.maxHP);
-            Console.Write("  Attack: {0}-{1}", hero.minAttack, hero.maxAttack);
-            Console.WriteLine("  Defence: {0}", hero.defence);
+            Console.WriteLine("Лесник:");
+            Console.Write("Здоорвье: {0}/{1}", hero.hp, hero.maxHP);
+            Console.Write("  Сила атаки: {0}-{1}", hero.minAttack, hero.maxAttack);
+            Console.WriteLine("  Защита: {0}", hero.defence);
 
             Enemy enemy = combatScreen.enemy;
             Console.WriteLine("{0}:", enemy.name);
-            Console.Write("HP: {0}/{1}", enemy.hp, enemy.maxHP);
-            Console.Write("  Attack: {0}-{1}", enemy.minAttack, enemy.maxAttack);
-            Console.WriteLine("  Defence: {0}", enemy.armor);
+            Console.Write("Здоровье: {0}/{1}", enemy.hp, enemy.maxHP);
+            Console.Write("  Сила атаки: {0}-{1}", enemy.minAttack, enemy.maxAttack);
+            Console.WriteLine("  Защита: {0}", enemy.armor);
         }
     }
 }
