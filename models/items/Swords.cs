@@ -9,6 +9,7 @@ namespace Roguelike {
             cost: cost
         ) {
             this.effectDescription = effectDescription;
+            this.attackPoints = attackPoints;
         }
     }
 

@@ -12,9 +12,9 @@ namespace Roguelike {
                 App.openMapScreen();
             }
 
-            switch (charKey.Key) {
+            // switch (charKey.Key) {
                 
-            }
+            // }
         }   
     }
 }
