@@ -10,7 +10,10 @@ namespace Roguelike {
 
         public void onKeyPressed(ConsoleKeyInfo charKey) {
             if (charKey.Key == ConsoleKey.Escape) {
-                App.openMapScreen();
+                if (openedFrom == Screen.Map)
+                    App.openMapScreen();
+                else if (openedFrom == Screen.Combat)
+                    App.backToCombatScreen();
             }
 
             // switch (charKey.Key) {

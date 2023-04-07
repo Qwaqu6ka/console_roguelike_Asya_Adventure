@@ -9,7 +9,7 @@ namespace Roguelike {
                 viewToShow = screen switch {
                     Screen.Start     => new StartView(App.startScreen),
                     Screen.Map       => new MapView(App.mapScreen),
-                    Screen.Combat    => new CombatView(),
+                    Screen.Combat    => new CombatView(App.combatScreen),
                     Screen.Shop      => new MapView(App.mapScreen),
                     Screen.Inventory => new InventoryView(App.inventoryScreen),
                     Screen.End       => new EndView(App.endScreen),

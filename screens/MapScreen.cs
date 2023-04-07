@@ -23,9 +23,14 @@ namespace Roguelike {
         public MapScreen() {
             maps = App.properties.maps;
             getNextRandomMap();
+
+            CombatScreen.defeatedEnemy.observe((enemy) => {
+                if (enemy != null)
+                    removeEnemy(enemy);
+            });
         }
 
-        public void removeEnemy(Enemy enemy) {
+        private void removeEnemy(Enemy enemy) {
             enemies.Remove(enemy);
         }
 
@@ -76,8 +81,8 @@ namespace Roguelike {
             checkExit();
         }
 
-        private void checkItem() {
-            if (playerCoords.Equals(activeMap.finishCoords)) // TO DO
+        private void checkItem() {  // TODO
+            if (playerCoords.Equals(activeMap.finishCoords))
                 getNextRandomMap();
         }
 
@@ -103,23 +108,23 @@ namespace Roguelike {
             return true;
         }
 
-        private bool checkNearbyCells(Coordinates cell, char entity) {
-            int x = cell.x, y = cell.y;
-            List<string> map = activeMap.map;
+        // private bool checkNearbyCells(Coordinates cell, char entity) {
+        //     int x = cell.x, y = cell.y;
+        //     List<string> map = activeMap.map;
 
-            if (map[y][x] == entity ||
-                y > 0 && map[y - 1][x] == entity ||
-                y < map.Count - 1 && map[y + 1][x] == entity ||
-                x > 0 && map[y][x - 1] == entity ||
-                x < map[0].Length - 1 && map[y][x + 1] == entity ||
-                y > 0 && x < map[0].Length - 1 && map[y - 1][x + 1] == entity ||
-                y < map.Count - 1 && x < map[0].Length - 1 && map[y + 1][x + 1] == entity ||
-                y < map.Count - 1 && x > 0 && map[y + 1][x - 1] == entity ||
-                y > 0 && x > 0 && map[y - 1][x - 1] == entity)
-                return true;
+        //     if (map[y][x] == entity ||
+        //         y > 0 && map[y - 1][x] == entity ||
+        //         y < map.Count - 1 && map[y + 1][x] == entity ||
+        //         x > 0 && map[y][x - 1] == entity ||
+        //         x < map[0].Length - 1 && map[y][x + 1] == entity ||
+        //         y > 0 && x < map[0].Length - 1 && map[y - 1][x + 1] == entity ||
+        //         y < map.Count - 1 && x < map[0].Length - 1 && map[y + 1][x + 1] == entity ||
+        //         y < map.Count - 1 && x > 0 && map[y + 1][x - 1] == entity ||
+        //         y > 0 && x > 0 && map[y - 1][x - 1] == entity)
+        //         return true;
 
-            return false;
-        }
+        //     return false;
+        // }
 
         private void getNextRandomMap() {
             if (activeMap == finalMap) {
