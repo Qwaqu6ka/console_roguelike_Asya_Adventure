@@ -5,15 +5,19 @@ namespace Roguelike {
         public readonly int maxAttack;
         public readonly int minAttack;
         public readonly string name;
+        public readonly char symbolOnMap;
         public bool isBlind = false;
-        public Coordinates coords = new Coordinates(0, 0);
 
-        public Enemy(int hp, int armor, int maxAttack, int minAttack, string name) {
+        public static Coordinates defaultCoords = new Coordinates(-100, -100);
+        public Coordinates coords = defaultCoords;
+
+        public Enemy(int hp, int armor, int maxAttack, int minAttack, string name, char symbolOnMap) {
             this.hp = hp;
             this.armor = armor;
             this.maxAttack = maxAttack;
             this.minAttack = minAttack;
             this.name = name;
+            this.symbolOnMap = symbolOnMap;
         }
 
         abstract public object Clone();
@@ -27,7 +31,8 @@ namespace Roguelike {
             hp: App.properties.enemyDefaultStats.Forgetful.hp, 
             armor: App.properties.enemyDefaultStats.Forgetful.armor, 
             maxAttack: App.properties.enemyDefaultStats.Forgetful.maxAttack,
-            minAttack: App.properties.enemyDefaultStats.Forgetful.minAttack
+            minAttack: App.properties.enemyDefaultStats.Forgetful.minAttack,
+            symbolOnMap: App.properties.icons.Forgetful[0]
         ) {}
 
         public override object Clone() {
@@ -42,11 +47,12 @@ namespace Roguelike {
 
     class Tracker : Enemy {
         public Tracker() : base(
-            name: App.properties.enemyDefaultStats.Forgetful.name,
-            hp: App.properties.enemyDefaultStats.Forgetful.hp, 
-            armor: App.properties.enemyDefaultStats.Forgetful.armor, 
-            maxAttack: App.properties.enemyDefaultStats.Forgetful.maxAttack,
-            minAttack: App.properties.enemyDefaultStats.Forgetful.minAttack
+            name: App.properties.enemyDefaultStats.Tracker.name,
+            hp: App.properties.enemyDefaultStats.Tracker.hp, 
+            armor: App.properties.enemyDefaultStats.Tracker.armor, 
+            maxAttack: App.properties.enemyDefaultStats.Tracker.maxAttack,
+            minAttack: App.properties.enemyDefaultStats.Tracker.minAttack,
+            symbolOnMap: App.properties.icons.Tracker[0]
         ) {}
 
         public override object Clone() {
@@ -65,7 +71,8 @@ namespace Roguelike {
             hp: 25, 
             armor: 5, 
             maxAttack: 6,
-            minAttack: 3 
+            minAttack: 3 ,
+            symbolOnMap: 'B'
         ) {}
 
         public override object Clone() {

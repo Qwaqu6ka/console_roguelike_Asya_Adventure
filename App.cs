@@ -17,7 +17,7 @@
         public static StartScreen startScreen = null!;
         public static InventoryScreen inventoryScreen = null!;
 
-        private const string SETTINGS_FILE = "123.json";
+        private const string SETTINGS_FILE = "properties.json";
 
         static void Main() {
             readSettings();
@@ -29,10 +29,7 @@
             Console.CursorVisible = false;
 
             while (true) {
-                Console.Clear();
-
                 viewRouter.draw();
-
                 keyController.onKeyPressed(Console.ReadKey());
             }
         }

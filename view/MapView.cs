@@ -20,15 +20,29 @@ namespace Roguelike {
             int rows = activeMap.map.Count;
             int columns = activeMap.map[0].Length;
 
+            Coordinates coordsPoint = new Coordinates(0, 0);
             for (int y = 0; y < rows; y++) {
+                coordsPoint.y = y;
                 for (int x = 0; x < columns; x++) {
-                    if (x == playerCoords.x && y == playerCoords.y)
+                    coordsPoint.x = x;
+                    if (coordsPoint.Equals(playerCoords)) {
                         Console.Write(App.properties.icons.hero);
-                    else
+                    }
+                    else if (mapScreen.isCellOccupiedByEnemy(coordsPoint)) {
+                        foreach (Enemy enemy in mapScreen.enemies) {
+                            if (enemy.coords.Equals(coordsPoint)) {
+                                Console.Write(enemy.symbolOnMap);
+                                break;
+                            }
+                        }
+                    }
+                    else {
                         Console.Write(activeMap.map[y][x]);
+                    }
                 }
                 Console.WriteLine();
             }
+            Console.WriteLine(mapScreen.enemies.Count);
         }
     }
 }

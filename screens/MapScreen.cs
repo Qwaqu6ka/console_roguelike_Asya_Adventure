@@ -20,8 +20,8 @@ namespace Roguelike {
             get { return _playerCoords; }
         }
 
+        public HashSet<Enemy> enemies = null!;
         private List<Map> maps;
-        private HashSet<Enemy> enemies = null!;
 
         private Map _activeMap = null!;
         public Map activeMap {
@@ -31,16 +31,6 @@ namespace Roguelike {
         public MapScreen() {
             maps = App.properties.maps;
             getNextRandomMap();
-        }
-
-        private bool isCellAllowed(Coordinates cell) {
-            List<string> map = activeMap.map;
-            foreach (string symbol in App.properties.forbidenSymbols) {
-                if (map[cell.y][cell.x] == symbol[0]) {
-                    return false;
-                } 
-            }
-            return true;
         }
 
         public void onKeyPressed(ConsoleKeyInfo charKey) {
@@ -76,8 +66,16 @@ namespace Roguelike {
             changeState();
         }
 
+        public bool isCellOccupiedByEnemy(Coordinates coords) {
+            foreach (Enemy enemy in enemies) {
+                if (enemy.coords.Equals(coords))
+                    return true;
+            }
+            return false;
+        }
+
         private void changeState() {
-            char cell = activeMap.map[playerCoords.y][playerCoords.x];
+            char cell = activeMap.at(playerCoords);
 
             switch (cell) {
                 case '▒':
@@ -89,7 +87,15 @@ namespace Roguelike {
             _isEnemyNear.data = checkNearbyCells(playerCoords, 'Ü');
         }
 
-        // Проверяет клетку и окрестности на наличие какой-либо сущности
+        private bool isCellAllowed(Coordinates cell) {
+            foreach (string symbol in App.properties.forbidenSymbols) {
+                if (activeMap.at(cell) == symbol[0]) {
+                    return false;
+                } 
+            }
+            return true;
+        }
+
         private bool checkNearbyCells(Coordinates cell, char entity) {
             int x = cell.x, y = cell.y;
             List<string> map = activeMap.map;
@@ -114,37 +120,45 @@ namespace Roguelike {
             _playerCoords = activeMap.startCoords;
             
             getEnemies();
+            giveEnemiesRandomCoords();
         }
 
         private void getEnemies() {
             enemies = new HashSet<Enemy>();
-            // int nextEnemyCount = new System.Random()
-            //     .Next(App.properties.enemyGenerationParams.maxEnemies + 1);
-            int nextEnemyCount = 1;
+            int nextEnemyCount = new System.Random()
+                .Next(App.properties.enemyGenerationParams.maxEnemies + 1);
             EnemyGlossary enemyGlossary = new EnemyGlossary();
             for (int i = 0; i < nextEnemyCount; ++i) {
                 enemies.Add(enemyGlossary.getRandomEnemy());
             }
-            
+        }
+
+        private void giveEnemiesRandomCoords() {
             foreach (Enemy enemy in enemies) {
+
                 bool isCoordUnique = true;
+                Coordinates randCoords = new Coordinates(0, 0);
+
                 do {
-                    Coordinates coords = new Coordinates(0, 0);
+                    isCoordUnique = true;
+                    
                     do {
-                        Coordinates.randomGenerate(activeMap.map.Count, activeMap.map[0].Length);
-                    } while (!isCellAllowed(coords));
+                        randCoords = Coordinates.randomGenerate(activeMap.map.Count, activeMap.map[0].Length);
+                    } while (!isCellAllowed(randCoords));
 
                     int minDist = App.properties.enemyGenerationParams.distanceBetweenEnemies;
                     foreach (Enemy enemy1 in enemies) {
-                        if (enemy != enemy1 && 
-                            enemy1.coords.x != 0 && enemy1.coords.y != 0 && 
-                            enemy.coords.distTo(enemy1.coords) <= minDist) {
+                        if (!enemy.Equals(enemy1) && 
+                            !enemy1.coords.Equals(Enemy.defaultCoords) && 
+                            enemy.coords.distTo(enemy1.coords) <= minDist
+                        ) {
                             isCoordUnique = false;
                             break;
                         }
                     }
-
                 } while (!isCoordUnique);
+
+                enemy.coords = randCoords;
             }
         }
     }

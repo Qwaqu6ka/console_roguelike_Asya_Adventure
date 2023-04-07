@@ -18,6 +18,7 @@ namespace Roguelike {
         }
 
         public void draw() {
+            Console.Clear();
             viewToShow.draw();
         }
     }

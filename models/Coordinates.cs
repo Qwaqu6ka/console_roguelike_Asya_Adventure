@@ -18,14 +18,29 @@ namespace Roguelike {
             int upBorder, 
             int rightBorder, 
             int downBorder = 0,
-            int leftBorder = 0) {
-                int x = leftBorder + new System.Random().Next(rightBorder - leftBorder);
-                int y = downBorder + new System.Random().Next(upBorder - downBorder);
-                return new Coordinates(x, y);
+            int leftBorder = 0
+        ) {
+            int x = leftBorder + new System.Random().Next(rightBorder - leftBorder);
+            int y = downBorder + new System.Random().Next(upBorder - downBorder);
+            return new Coordinates(x, y);
         }
 
         public object Clone() {
             return new Coordinates(this.x, this.y);
+        }
+
+        public override bool Equals(object obj) {
+            return Equals(obj as Coordinates);
+        }
+
+        public bool Equals(Coordinates other) {
+            return other != null &&
+                this.x == other.x &&
+                this.y == other.y;
+        }
+
+        public override int GetHashCode() {
+            return HashCode.Combine(x, y);
         }
     }
 }
