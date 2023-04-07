@@ -108,26 +108,8 @@ namespace Roguelike {
             return true;
         }
 
-        // private bool checkNearbyCells(Coordinates cell, char entity) {
-        //     int x = cell.x, y = cell.y;
-        //     List<string> map = activeMap.map;
-
-        //     if (map[y][x] == entity ||
-        //         y > 0 && map[y - 1][x] == entity ||
-        //         y < map.Count - 1 && map[y + 1][x] == entity ||
-        //         x > 0 && map[y][x - 1] == entity ||
-        //         x < map[0].Length - 1 && map[y][x + 1] == entity ||
-        //         y > 0 && x < map[0].Length - 1 && map[y - 1][x + 1] == entity ||
-        //         y < map.Count - 1 && x < map[0].Length - 1 && map[y + 1][x + 1] == entity ||
-        //         y < map.Count - 1 && x > 0 && map[y + 1][x - 1] == entity ||
-        //         y > 0 && x > 0 && map[y - 1][x - 1] == entity)
-        //         return true;
-
-        //     return false;
-        // }
-
         private void getNextRandomMap() {
-            if (activeMap == finalMap) {
+            if (mapCounter == App.properties.levelsToFinalBoss) {
                 App.openWinScreen();
                 return;
             }
@@ -138,7 +120,7 @@ namespace Roguelike {
                 _activeMap = (Map)maps[nextMapIndex].Clone();
             }
             else {
-                _activeMap = finalMap;
+                _activeMap = (Map)finalMap.Clone();
             }
             
             _playerCoords = activeMap.startCoords;
