@@ -4,13 +4,13 @@ namespace Roguelike.Json {
         public HeroDefaultStats heroDefaultStats { get; set; } = null!;
         public EnemyDefaultStats enemyDefaultStats { get; set; } = null!;
         public EnemyGenerationParams enemyGenerationParams { get; set; } = null!;
-        public StartScreens startScreens { get; set; } = null!;
+        public Screens screens { get; set; } = null!;
         public Icons icons { get; set; } = null!;
         public List<Map> maps { get; set; } = null!;
         public List<string> forbidenSymbols { get; set; } = null!;
     }
 
-    class StartScreens {
+    class Screens {
         public List<string> welcome { get; set; } = null!;
         public List<string> story { get; set; } = null!;
     }

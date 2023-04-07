@@ -1,6 +1,6 @@
 namespace Roguelike {
     abstract class Enemy: ICloneable {
-        public readonly int hp;
+        public int hp;
         public readonly int armor;
         public readonly int maxAttack;
         public readonly int minAttack;

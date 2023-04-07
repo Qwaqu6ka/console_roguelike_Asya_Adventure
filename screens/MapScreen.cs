@@ -6,15 +6,14 @@ namespace Roguelike {
             get { return _playerCoords; }
         }
 
-        
-
-        public HashSet<Enemy> enemies = null!;
-        private List<Map> maps;
-
         private Map _activeMap = null!;
         public Map activeMap {
             get { return _activeMap; }
         }
+
+        public HashSet<Enemy> enemies = null!;
+        
+        private List<Map> maps;
 
         public MapScreen() {
             maps = App.properties.maps;
@@ -63,15 +62,13 @@ namespace Roguelike {
         }
 
         private void changeState() {
-            char cell = activeMap.at(playerCoords);
-
-            switch (cell) {
-                case '▒':
-                    getNextRandomMap();
-                    break;
-            }
-
             checkForFight();
+            checkExit();
+        }
+
+        private void checkExit() {
+            if (playerCoords.Equals(activeMap.finishCoords))
+                getNextRandomMap();
         }
 
         private void checkForFight() {
