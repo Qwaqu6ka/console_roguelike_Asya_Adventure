@@ -1,18 +1,14 @@
 namespace Roguelike {
+
+    using System.Diagnostics;
     
     class EndScreen : IKeyController {
 
-        public GameStatus state;
-
-        public EndScreen(GameStatus state) {
-            this.state = state;
-        }
-
         public void onKeyPressed(ConsoleKeyInfo charKey) {
-            if () {
-                state = GameStatus.Win;
-            } else if () {
-                state = GameStatus.Lose;
+            if (charKey.Key == ConsoleKey.Escape) {
+                Process.GetCurrentProcess().Kill();
+            } else if (charKey.Key == ConsoleKey.R) {
+                // функция для перезапуска
             }
         }
     }

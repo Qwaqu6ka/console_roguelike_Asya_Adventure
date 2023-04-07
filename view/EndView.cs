@@ -11,9 +11,9 @@ namespace Roguelike {
 
             List<string> screenToShow;
 
-            if (endScreen.state == GameStatus.Win) {
+            if (App.gameStatus == GameStatus.Win) {
                 screenToShow = victoryScreen;
-            } else if (endScreen.state == GameStatus.Lose) {
+            } else if (App.gameStatus == GameStatus.Lose) {
                 screenToShow = defeatScreen;
             }else {
                 throw new InvalidOperationException("ScreenToShow must has value");
