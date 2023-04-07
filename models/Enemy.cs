@@ -1,6 +1,7 @@
 namespace Roguelike {
     abstract class Enemy: ICloneable {
         public int hp;
+        public readonly int maxHP;
         public readonly int armor;
         public readonly int maxAttack;
         public readonly int minAttack;
@@ -13,6 +14,7 @@ namespace Roguelike {
 
         public Enemy(int hp, int armor, int maxAttack, int minAttack, string name, char symbolOnMap) {
             this.hp = hp;
+            this.maxHP = hp;
             this.armor = armor;
             this.maxAttack = maxAttack;
             this.minAttack = minAttack;

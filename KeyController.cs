@@ -7,10 +7,11 @@ namespace Roguelike {
             App.activeScreen.observe((screen) => {
                 controller = screen switch {
                     Screen.Map       => App.mapScreen,
-                    Screen.Combat    => App.mapScreen,
+                    Screen.Combat    => App.combatScreen,
                     Screen.Shop      => App.mapScreen,
                     Screen.Inventory => App.inventoryScreen,
                     Screen.Start     => App.startScreen,
+                    Screen.End       => App.mapScreen,
                     _ => throw new ArgumentOutOfRangeException("Not expected screen: {App.activeScreen}")
                 };
             });

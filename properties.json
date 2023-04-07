@@ -1,6 +1,7 @@
 {   
     "levelsToFinalBoss": 3,
     "itemsSpawnMaxCount": 1,
+    "animationDelayMillis": 1000,
     
     "heroDefaultStats": {
         "defaultHP": 10,

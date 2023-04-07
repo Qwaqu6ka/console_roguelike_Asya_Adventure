@@ -25,6 +25,10 @@
             readSettings();
             hero = new Hero();
             initScreens();
+            
+            combatScreen.isPlayerLoose.observe((yes) => {
+                if (yes) openLooseScreen();
+            });
 
             ViewRouter viewRouter = new ViewRouter();
             KeyController keyController = new KeyController();
@@ -46,6 +50,9 @@
             _activeScreen.data = Screen.Inventory;
         }
 
+        public static void backToCombatScreen() {
+            _activeScreen.data = Screen.Combat;
+        }
         public static void openCombatScreen(Enemy enemy) {
             combatScreen.startFight(enemy);
             _activeScreen.data = Screen.Combat;
