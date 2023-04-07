@@ -12,7 +12,7 @@ namespace Roguelike {
                     Screen.Combat    => new CombatView(),
                     Screen.Shop      => new MapView(App.mapScreen),
                     Screen.Inventory => new InventoryView(App.inventoryScreen),
-                    Screen.End       => new EndView(),
+                    Screen.End       => new EndView(App.endScreen),
                     _ => throw new ArgumentOutOfRangeException("Not expected screen: {App.activeScreen}")
                 };
             });

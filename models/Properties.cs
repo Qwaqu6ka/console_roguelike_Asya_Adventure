@@ -5,6 +5,7 @@ namespace Roguelike.Json {
         public EnemyDefaultStats enemyDefaultStats { get; set; } = null!;
         public EnemyGenerationParams enemyGenerationParams { get; set; } = null!;
         public Screens screens { get; set; } = null!;
+        public Battle battle { get; set; } = null!;
         public Icons icons { get; set; } = null!;
         public List<Map> maps { get; set; } = null!;
         public Map finalBattle { get; set; } = null!;
@@ -16,6 +17,7 @@ namespace Roguelike.Json {
     class Screens {
         public List<string> welcome { get; set; } = null!;
         public List<string> story { get; set; } = null!; 
+        public List<string> instructions { get; set; } = null!; 
         public Battle combat { get; set; } = null!;
     }
 

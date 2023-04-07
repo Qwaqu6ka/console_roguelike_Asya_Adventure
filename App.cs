@@ -18,6 +18,7 @@
         public static StartScreen startScreen = null!;
         public static InventoryScreen inventoryScreen = null!;
         public static CombatScreen combatScreen = null!;
+        public static EndScreen endScreen = null!;
 
         private const string SETTINGS_FILE = "properties.json";
 
@@ -28,8 +29,10 @@
 
             ViewRouter viewRouter = new ViewRouter();
             KeyController keyController = new KeyController();
+            Console.ForegroundColor = ConsoleColor.Green;
 
             Console.CursorVisible = false;
+            
 
             while (true) {
                 viewRouter.draw();
@@ -57,7 +60,7 @@
         }
 
         public static void openLooseScreen() {
-            gameStatus = GameStatus.Loose;
+            gameStatus = GameStatus.Lose;
             _activeScreen.data = Screen.End;
         }
 
@@ -74,6 +77,7 @@
             startScreen = new StartScreen();
             inventoryScreen = new InventoryScreen();
             combatScreen = new CombatScreen(mapScreen);
+            endScreen = new EndScreen();
         }
     }
 
@@ -88,7 +92,7 @@
 
     enum GameStatus {
         InProcess,
-        Loose,
+        Lose,
         Win
     }
 }

@@ -77,7 +77,7 @@ namespace Roguelike {
         }
 
         private void checkItem() {
-            if (playerCoords.Equals(activeMap.finishCoords))
+            if (playerCoords.Equals(activeMap.finishCoords)) // TO DO
                 getNextRandomMap();
         }
 

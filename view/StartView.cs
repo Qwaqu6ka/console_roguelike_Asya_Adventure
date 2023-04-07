@@ -3,6 +3,7 @@ namespace Roguelike {
         StartScreen startScreen;
         List<string> welcomeScreen = App.properties.screens.welcome;
         List<string> storyScreen = App.properties.screens.story;
+        List<string> instructionsScreen = App.properties.screens.instructions;
 
         public StartView(StartScreen startScreen) {
             this.startScreen = startScreen;
@@ -17,7 +18,9 @@ namespace Roguelike {
             else if (startScreen.state == StartScreen.ScreenType.Story) {
                 screenToShow = storyScreen;
             }
-            else {
+            else if (startScreen.state == StartScreen.ScreenType.Instructions) {
+                screenToShow = instructionsScreen;
+            } else {
                 throw new InvalidOperationException("ScreenToShow must has value");
             }
 
