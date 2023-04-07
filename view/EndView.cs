@@ -1,12 +1,9 @@
 namespace Roguelike {
 
     class EndView : View {
-        EndScreen endScreen;
         List<string> victoryScreen = App.properties.battle.heroVictory;
         List<string> defeatScreen = App.properties.battle.enemyVictory;
-        public EndView(EndScreen endScreen) {
-            this.endScreen = endScreen;
-        }
+
         override public void draw() {
 
             List<string> screenToShow;
@@ -15,7 +12,7 @@ namespace Roguelike {
                 screenToShow = victoryScreen;
             } else if (App.gameStatus == GameStatus.Lose) {
                 screenToShow = defeatScreen;
-            }else {
+            } else {
                 throw new InvalidOperationException("ScreenToShow must has value");
             }
 
