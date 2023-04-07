@@ -6,6 +6,11 @@ namespace Roguelike {
         public int? lastEnemyHit = null;
 
         private Enemy enemy = null!;
+        private MapScreen mapScreen = null!;
+
+        public CombatScreen(MapScreen mapScreen) {
+            this.mapScreen = mapScreen;
+        }
 
         public void startFight(Enemy enemy) {
             this.enemy = enemy;
@@ -46,7 +51,8 @@ namespace Roguelike {
         }
 
         private void onPlayersWin() {
-            App.openWinScreen();    // TODO: переделать
+            mapScreen.removeEnemy(enemy);
+            App.openMapScreen();
         }
 
         private void onPlayersLoose() {

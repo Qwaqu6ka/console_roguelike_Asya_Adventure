@@ -7,6 +7,9 @@ namespace Roguelike.Json {
         public Screens screens { get; set; } = null!;
         public Icons icons { get; set; } = null!;
         public List<Map> maps { get; set; } = null!;
+        public Map finalBattle { get; set; } = null!;
+        public int levelsToFinalBoss;
+        public int itemsSpawnMaxCount;
         public List<string> forbidenSymbols { get; set; } = null!;
     }
 

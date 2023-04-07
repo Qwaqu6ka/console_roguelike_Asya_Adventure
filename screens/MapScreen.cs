@@ -12,12 +12,21 @@ namespace Roguelike {
         }
 
         public HashSet<Enemy> enemies = null!;
-        
+
+        public HashSet<Item> items = null!;
+
         private List<Map> maps;
+        private Map finalMap = App.properties.finalBattle;
+
+        private int mapCounter = 0;
 
         public MapScreen() {
             maps = App.properties.maps;
             getNextRandomMap();
+        }
+
+        public void removeEnemy(Enemy enemy) {
+            enemies.Remove(enemy);
         }
 
         public void onKeyPressed(ConsoleKeyInfo charKey) {
@@ -63,7 +72,13 @@ namespace Roguelike {
 
         private void changeState() {
             checkForFight();
+            checkItem();
             checkExit();
+        }
+
+        private void checkItem() {
+            if (playerCoords.Equals(activeMap.finishCoords))
+                getNextRandomMap();
         }
 
         private void checkExit() {
@@ -107,12 +122,32 @@ namespace Roguelike {
         }
 
         private void getNextRandomMap() {
-            int nextMapIndex = new System.Random().Next(maps.Count);
-            _activeMap = (Map)maps[nextMapIndex].Clone();
+            if (activeMap == finalMap) {
+                App.openWinScreen();
+                return;
+            }
+
+            mapCounter++;
+            if (mapCounter < App.properties.levelsToFinalBoss) {
+                int nextMapIndex = new System.Random().Next(maps.Count);
+                _activeMap = (Map)maps[nextMapIndex].Clone();
+            }
+            else {
+                _activeMap = finalMap;
+            }
+            
             _playerCoords = activeMap.startCoords;
             
             getEnemies();
             giveEnemiesRandomCoords();
+            getItems();
+        }
+
+        private void getItems() {   // TODO:
+            items = new HashSet<Item>();
+            int nextItemCount = new System.Random()
+                .Next(App.properties.itemsSpawnMaxCount + 1);
+            
         }
 
         private void getEnemies() {

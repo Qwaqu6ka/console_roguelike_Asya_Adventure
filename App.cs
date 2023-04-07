@@ -73,7 +73,7 @@
             mapScreen = new MapScreen();
             startScreen = new StartScreen();
             inventoryScreen = new InventoryScreen();
-            combatScreen = new CombatScreen();
+            combatScreen = new CombatScreen(mapScreen);
         }
     }
 
