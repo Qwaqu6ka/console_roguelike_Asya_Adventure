@@ -46,7 +46,7 @@ namespace Roguelike {
         }
 
         private void onPlayersWin() {
-            App.openWinScreen();
+            App.openWinScreen();    // TODO: переделать
         }
 
         private void onPlayersLoose() {

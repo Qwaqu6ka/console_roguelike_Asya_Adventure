@@ -12,7 +12,7 @@
             get { return _activeScreen; } 
         }
 
-        public static Hero hero = new Hero();
+        public static Hero hero = null!;
         public static Properties properties = null!;
         public static MapScreen mapScreen = null!;
         public static StartScreen startScreen = null!;
@@ -23,6 +23,7 @@
 
         static void Main() {
             readSettings();
+            hero = new Hero();
             initScreens();
 
             ViewRouter viewRouter = new ViewRouter();

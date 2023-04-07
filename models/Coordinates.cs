@@ -29,7 +29,7 @@ namespace Roguelike {
             return new Coordinates(this.x, this.y);
         }
 
-        public override bool Equals(object obj) {   // TODO: попробовать удалить
+        public override bool Equals(object obj) {
             return Equals(obj as Coordinates);
         }
 
