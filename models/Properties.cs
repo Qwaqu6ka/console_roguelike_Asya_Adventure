@@ -15,7 +15,18 @@ namespace Roguelike.Json {
 
     class Screens {
         public List<string> welcome { get; set; } = null!;
-        public List<string> story { get; set; } = null!;
+        public List<string> story { get; set; } = null!; 
+        public Battle combat { get; set; } = null!;
+    }
+
+    class Battle {
+        public List<string> defaultBattle { get; set; } = null!;
+        public List<string> heroAttack { get; set; } = null!;
+        public List<string> enemyAttack { get; set; } = null!;
+        public List<string> heroVictory { get; set; } = null!;
+        public List<string> enemyVictory { get; set; } = null!;
+        public List<string> gameVictory { get; set; } = null!;
+        public List<string> gameDefeat { get; set; } = null!;
     }
 
     class HeroDefaultStats {
