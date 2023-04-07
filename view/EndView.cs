@@ -1,8 +1,8 @@
 namespace Roguelike {
 
     class EndView : View {
-        List<string> victoryScreen = App.properties.battle.heroVictory;
-        List<string> defeatScreen = App.properties.battle.enemyVictory;
+        List<string> victoryScreen = App.properties.screens.gameVictory;
+        List<string> defeatScreen = App.properties.screens.gameDefeat;
 
         override public void draw() {
 

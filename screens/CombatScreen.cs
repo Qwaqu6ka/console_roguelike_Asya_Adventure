@@ -33,6 +33,8 @@ namespace Roguelike {
 
         public void startFight(Enemy enemy) {
             this.enemy = enemy;
+            _defeatedEnemy.data = null;
+            _isPlayerLoose.data = false;
         }
 
         public void onKeyPressed(ConsoleKeyInfo charKey) {

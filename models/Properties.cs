@@ -20,6 +20,8 @@ namespace Roguelike.Json {
         public List<string> story { get; set; } = null!; 
         public List<string> instructions { get; set; } = null!; 
         public Battle combat { get; set; } = null!;
+        public List<string> gameVictory { get; set; } = null!;
+        public List<string> gameDefeat { get; set; } = null!;
     }
 
     class Battle {
@@ -28,8 +30,6 @@ namespace Roguelike.Json {
         public List<string> enemyAttack { get; set; } = null!;
         public List<string> heroVictory { get; set; } = null!;
         public List<string> enemyVictory { get; set; } = null!;
-        public List<string> gameVictory { get; set; } = null!;
-        public List<string> gameDefeat { get; set; } = null!;
     }
 
     class HeroDefaultStats {
