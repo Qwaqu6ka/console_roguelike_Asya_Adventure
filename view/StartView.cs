@@ -1,16 +1,31 @@
 namespace Roguelike {
     class StartView : View {
         StartScreen startScreen;
+        List<string> welcomeScreen = App.properties.startScreens.welcome;
+        List<string> storyScreen = App.properties.startScreens.story;
 
         public StartView(StartScreen startScreen) {
             this.startScreen = startScreen;
         }
         override public void draw() {
-            if (startScreen.state == StartScreen.StartScreens.Welcome) {
-                Console.WriteLine("Welcome!");
+
+            List<string> screenToShow;
+
+            if (startScreen.state == StartScreen.ScreenType.Welcome) {
+                screenToShow = welcomeScreen;
             }
-            else if (startScreen.state == StartScreen.StartScreens.Story) {
-                Console.WriteLine("Story...");
+            else if (startScreen.state == StartScreen.ScreenType.Story) {
+                screenToShow = storyScreen;
+            }
+            else {
+                throw new InvalidOperationException("ScreenToShow must has value");
+            }
+
+            for (int y = 0; y < screenToShow.Count; y++) {
+                for (int x = 0; x < screenToShow[0].Length; x++) {
+                    Console.Write(screenToShow[y][x]);
+                }
+                Console.WriteLine();
             }
         }
     }

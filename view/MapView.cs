@@ -42,7 +42,9 @@ namespace Roguelike {
                 }
                 Console.WriteLine();
             }
-            Console.WriteLine(mapScreen.enemies.Count);
+            foreach (Enemy enemy1 in mapScreen.enemies) {
+                Console.WriteLine(playerCoords.distTo(enemy1.coords));
+            }
         }
     }
 }

@@ -10,7 +10,7 @@ namespace Roguelike {
 
         public int distTo(Coordinates coords) {
             return Convert.ToInt32(
-                Math.Sqrt(Math.Abs(coords.x - this.x) + Math.Abs(coords.y - this.y))
+                Math.Sqrt(Math.Pow(Math.Abs(coords.x - this.x), 2) + Math.Pow(Math.Abs(coords.y - this.y), 2))
             );
         }
 
@@ -29,7 +29,7 @@ namespace Roguelike {
             return new Coordinates(this.x, this.y);
         }
 
-        public override bool Equals(object obj) {
+        public override bool Equals(object obj) {   // TODO: попробовать удалить
             return Equals(obj as Coordinates);
         }
 

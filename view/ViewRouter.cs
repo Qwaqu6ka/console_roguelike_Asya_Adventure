@@ -9,7 +9,7 @@ namespace Roguelike {
                 viewToShow = screen switch {
                     Screen.Start     => new StartView(App.startScreen),
                     Screen.Map       => new MapView(App.mapScreen),
-                    Screen.Combat    => new MapView(App.mapScreen),
+                    Screen.Combat    => new CombatView(),
                     Screen.Shop      => new MapView(App.mapScreen),
                     Screen.Inventory => new InventoryView(App.inventoryScreen),
                     _ => throw new ArgumentOutOfRangeException("Not expected screen: {App.activeScreen}")

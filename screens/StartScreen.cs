@@ -1,17 +1,17 @@
 namespace Roguelike {
     class StartScreen : IKeyController {
 
-        public StartScreens state = StartScreens.Welcome;
+        public ScreenType state = ScreenType.Welcome;
 
         public void onKeyPressed(ConsoleKeyInfo charKey) {
-            if ((charKey.Key == ConsoleKey.Spacebar) && (state != StartScreens.Story)) {
-                state = StartScreens.Story;
-            } else if ((charKey.Key == ConsoleKey.Spacebar) && (state == StartScreens.Story)) {
+            if ((charKey.Key == ConsoleKey.Spacebar) && (state != ScreenType.Story)) {
+                state = ScreenType.Story;
+            } else if ((charKey.Key == ConsoleKey.Spacebar) && (state == ScreenType.Story)) {
                 App.openMapScreen();
             }
         }
 
-        public enum StartScreens {
+        public enum ScreenType {
             Welcome,
             Story
         }

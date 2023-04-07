@@ -6,16 +6,15 @@
     static class App {
 
         private static MutableLiveData<Screen> _activeScreen = new MutableLiveData<Screen>(Screen.Start);
-        public static LiveData<Screen> activeScreen {
-            get {
-                return _activeScreen;
-            }
+        public static LiveData<Screen> activeScreen { 
+            get { return _activeScreen; } 
         }
 
         public static Properties properties = null!;
         public static MapScreen mapScreen = null!;
         public static StartScreen startScreen = null!;
         public static InventoryScreen inventoryScreen = null!;
+        public static CombatScreen combatScreen = null!;
 
         private const string SETTINGS_FILE = "properties.json";
 
@@ -42,6 +41,11 @@
             _activeScreen.data = Screen.Inventory;
         }
 
+        public static void openCombatScreen(Enemy enemy) {
+            combatScreen.startFight(enemy);
+            _activeScreen.data = Screen.Combat;
+        }
+
         private static void readSettings() {
             using (StreamReader r = new StreamReader(SETTINGS_FILE)) {
                 string json = r.ReadToEnd();
@@ -54,6 +58,7 @@
             mapScreen = new MapScreen();
             startScreen = new StartScreen();
             inventoryScreen = new InventoryScreen();
+            combatScreen = new CombatScreen();
         }
     }
 

@@ -1,24 +1,12 @@
 namespace Roguelike {
 
     class MapScreen : IKeyController {
-        private MutableLiveData<bool> _isItemNear = new MutableLiveData<bool>(false);
-        public LiveData<bool> isItemNear {
-            get {
-                return _isItemNear;
-            }
-        }
-
-        private MutableLiveData<bool> _isEnemyNear = new MutableLiveData<bool>(false);
-        public LiveData<bool> isEnemyNear {
-            get {
-                return _isEnemyNear;
-            }
-        }
-
         private Coordinates _playerCoords = null!;
         public Coordinates playerCoords {
             get { return _playerCoords; }
         }
+
+        
 
         public HashSet<Enemy> enemies = null!;
         private List<Map> maps;
@@ -83,8 +71,15 @@ namespace Roguelike {
                     break;
             }
 
-            _isItemNear.data = checkNearbyCells(playerCoords, '$');
-            _isEnemyNear.data = checkNearbyCells(playerCoords, 'Ü');
+            checkForFight();
+        }
+
+        private void checkForFight() {
+            foreach (Enemy enemy in enemies) {
+                if (playerCoords.distTo(enemy.coords) <= 1) {
+                    App.openCombatScreen(enemy);
+                }
+            }
         }
 
         private bool isCellAllowed(Coordinates cell) {
@@ -150,12 +145,15 @@ namespace Roguelike {
                     foreach (Enemy enemy1 in enemies) {
                         if (!enemy.Equals(enemy1) && 
                             !enemy1.coords.Equals(Enemy.defaultCoords) && 
-                            enemy.coords.distTo(enemy1.coords) <= minDist
+                            randCoords.distTo(enemy1.coords) <= minDist
                         ) {
                             isCoordUnique = false;
                             break;
                         }
                     }
+                    if (enemy.coords.distTo(playerCoords) <= minDist)
+                        isCoordUnique = false;
+                        
                 } while (!isCoordUnique);
 
                 enemy.coords = randCoords;
